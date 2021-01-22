@@ -35,3 +35,51 @@ The primary purpose of Mist is to have users create accounts and purchase video 
 ```
 
 # The Requirements (SCOPE)
+## Current Features (Users)
+```
+1. Sign up for account
+2. Login to the account
+3. Browse for list of products
+4. View details of individual products
+5. Add/delete products from cart
+5. Purchase products via STRIPE
+6. Check transaction and order history
+7. View product library to see the products you own
+```
+
+# Developing the Site Structure (STRUCTURE)
+The Mist platform has a navigation bar and footer on every page, allowing users to access most available pages with ease
+
+## Sitemap
+---
+
+The sitemap of the project will be available soon...
+
+---
+
+# Developing Page Structure and Organize Interactions (SKELETON)
+--
+
+## Wireframes
+---
+
+The wireframes of the project will be available soon...
+
+---
+
+# Designing the Graphics User Interface (SURFACE)
+## Colors
+--
+
+## Fonts
+--
+
+# ER Diagram
+<img src="./documentation/proj3-erd.jpg" style="margin: 0;">
+
+---
+
+# Logical Schema
+<img src="./documentation/proj3-logical-schema.jpg" style="margin: 0;">
+
+---
