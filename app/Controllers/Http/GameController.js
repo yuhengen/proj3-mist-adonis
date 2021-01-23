@@ -1,8 +1,18 @@
 'use strict'
 
+const Game = use('App/Models/Game')
+
 class GameController {
-  index({ response }) {
-    response.send("Hello from Games!")
+  async index({ view }) {
+    let allGames = await Game.all();
+    return view.render('games/index', {
+      'games': allGames.toJSON()
+    })
+  }
+
+  async gamesapi() {
+    let allGames = await Game.all();
+    return allGames.toJSON()
   }
 }
 

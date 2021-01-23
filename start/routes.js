@@ -18,3 +18,4 @@ const Route = use('Route')
 
 Route.on('/').render('welcome')
 Route.get('games/', 'GameController.index')
+Route.get('games-api/', 'GameController.gamesapi')

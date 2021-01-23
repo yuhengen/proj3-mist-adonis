@@ -11,6 +11,7 @@ class GameSchema extends Schema {
       table.integer('price').unsigned().notNullable()
       table.date('release_date').notNullable()
       table.text('description').notNullable()
+      table.string('developer',100).notNullable()
       table.string('image', 200).notNullable()
       table.string('preview_1', 200).notNullable()
       table.string('preview_2', 200).notNullable()
