@@ -6,7 +6,8 @@ const Schema = use('Schema')
 class GamesSchema extends Schema {
   up () {
     this.table('games', (table) => {
-      table.string('country',30).notNullable()
+      table.string('publisher',45).notNullable()
+      table.string('developer',45).notNullable()
       // alter table
     })
   }
@@ -14,7 +15,8 @@ class GamesSchema extends Schema {
   down () {
     this.table('games', (table) => {
       // reverse alternations
-      table.dropColumn('country')
+      table.dropColumn('publisher')
+      table.dropColumn('developer')
     })
   }
 }
