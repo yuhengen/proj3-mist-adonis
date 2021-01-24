@@ -14,6 +14,10 @@ class GameController {
     let allGames = await Game.all();
     return allGames.toJSON()
   }
+
+  add({ view }) {
+    return view.render('games/create')
+  }
 }
 
 module.exports = GameController
