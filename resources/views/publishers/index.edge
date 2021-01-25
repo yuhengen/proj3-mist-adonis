@@ -1,0 +1,21 @@
+@layout('base')
+
+@section('title')
+Publisher Login Portal
+@endsection
+
+@section('content')
+<div class="d-flex justify-content-center align-items-center flex-column" style="height:90vh;">
+  <h1 class=" mb-3">Publisher Login</h1>
+  <form method="POST">
+  <div class="form-group">
+    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter username">
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control" placeholder="Enter password">
+  </div>
+  <button type="submit" class="btn btn-primary btn-block">Submit</button>
+  <a href="" class="btn btn-secondary btn-block">Register</a>
+</form>
+</div>
+@endsection
