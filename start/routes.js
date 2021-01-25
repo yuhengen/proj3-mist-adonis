@@ -19,7 +19,8 @@ const Route = use('Route')
 Route.on('/').render('welcome')
 
 // Publisher portal
-Route.get('publisher/','PublisherController.index')
+Route.get('publisher/','PublisherController.index').as('publisher_login')
+Route.get('publisher/register','PublisherController.register').as('publisher_register')
 
 Route.get('games/', 'GameController.index').as('all_games')
 Route.get('games-api/', 'GameController.gamesapi')

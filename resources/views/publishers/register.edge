@@ -1,0 +1,40 @@
+@layout('base')
+
+@section('title')
+Publisher Registration
+@endsection
+
+@section('content')
+
+<h1>Publisher Registration</h1>
+
+<form method="POST">
+  {{csrfField()}}
+  <div class="m-3">
+    <label class="form-label">Login Username:</label>
+    <input type="text" name="username" class="form-control"/>
+  </div>
+  <div class="m-3">
+    <label class="form-label">Password:</label>
+    <input type="password" name="password" class="form-control"/>
+  </div>
+  <div class="m-3">
+    <label class="form-label">Confirm Password:</label>
+    <input type="password" name="password_c" class="form-control"/>
+  </div>
+  <div class="m-3">
+    <label class="form-label">CS Email Address:</label>
+    <input type="email" name="email" class="form-control" aria-describedby="emailHelp">
+    <small id="emailHelp" class="form-text text-muted">This email address will be used to contact your publisher team</small>
+  </div>
+  <div class="m-3">
+    <label class="form-label">Publisher Name:</label>
+    <input type="text" name="publisher_name" class="form-control"/>
+    <small id="emailHelp" class="form-text text-muted">This will be displayed as Publisher on your games</small>
+  </div>
+  <div class="m-3">
+    <input type="submit" class="btn btn-primary"/>
+    <a href="{{route('publisher_login')}}" class="btn btn-danger m-3">Back</a>
+  </div>
+</form>
+@endsection
