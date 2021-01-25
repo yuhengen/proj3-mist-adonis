@@ -21,6 +21,7 @@ Route.on('/').render('welcome')
 // Publisher portal
 Route.get('publisher/','PublisherController.index').as('publisher_login')
 Route.get('publisher/register','PublisherController.register').as('publisher_register')
+Route.post('publisher/register','PublisherController.processRegister')
 
 Route.get('games/', 'GameController.index').as('all_games')
 Route.get('games-api/', 'GameController.gamesapi')

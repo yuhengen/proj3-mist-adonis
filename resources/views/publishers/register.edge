@@ -5,26 +5,32 @@ Publisher Registration
 @endsection
 
 @section('content')
+<div class="d-flex justify-content-center flex-column" style="height:90vh;">
 
-<h1>Publisher Registration</h1>
-
+<h1 style="text-align:center" class="m-3">Publisher Registration</h1>
 <form method="POST">
   {{csrfField()}}
   <div class="m-3">
     <label class="form-label">Login Username:</label>
-    <input type="text" name="username" class="form-control"/>
+    <input type="text" name="username" class="form-control {{hasErrorFor('username') ? 'is-invalid': ''}}" value="{{old('username')}}" />
+    @if(hasErrorFor('username'))
+    <div class='invalid-feedback'>{{getErrorFor('username')}}</div>
+    @endif
   </div>
   <div class="m-3">
     <label class="form-label">Password:</label>
-    <input type="password" name="password" class="form-control"/>
+    <input type="password" name="password" class="form-control {{hasErrorFor('password') ? 'is-invalid': ''}}" value="{{old('password')}}"/>
+    @if(hasErrorFor('password'))
+    <div class='invalid-feedback'>{{getErrorFor('password')}}</div>
+    @endif
   </div>
   <div class="m-3">
     <label class="form-label">Confirm Password:</label>
-    <input type="password" name="password_c" class="form-control"/>
+    <input type="password" name="password_confirmation" class="form-control"/>
   </div>
   <div class="m-3">
     <label class="form-label">CS Email Address:</label>
-    <input type="email" name="email" class="form-control" aria-describedby="emailHelp">
+    <input type="email" name="contact_email" class="form-control" aria-describedby="emailHelp">
     <small id="emailHelp" class="form-text text-muted">This email address will be used to contact your publisher team</small>
   </div>
   <div class="m-3">
@@ -37,4 +43,5 @@ Publisher Registration
     <a href="{{route('publisher_login')}}" class="btn btn-danger m-3">Back</a>
   </div>
 </form>
+</div>
 @endsection
