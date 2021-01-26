@@ -1,10 +1,11 @@
 'use strict'
 
 const Publisher = use('App/Models/Publisher')
+const Game = use('App/Models/Game')
 const { validateAll } = use('Validator')
 
 class PublisherController {
-  async index({ view }) {
+  index({ view }) {
     return view.render('publishers/index')
   }
 
@@ -14,11 +15,23 @@ class PublisherController {
     return response.route('publisher_games')
   }
 
-  async games({ auth,view }) {
+  async games({ auth, view }) {
     let userData = await auth.getUser()
-    return view.render('publishers/games',{
+    return view.render('publishers/games', {
       userData: userData
     })
+  }
+
+  async addGame({ auth, view }) {
+    let userData = await auth.getUser()
+    return view.render('publishers/add_game', {
+      userData: userData
+    })
+  }
+
+  async processAdd({ auth, request, response}){
+    let userData = await auth.getUser()
+    console.log(userData.id)
   }
 
   async processLogout({ auth, response }) {

@@ -25,6 +25,8 @@ Route.get('publisher/register', 'PublisherController.register').as('publisher_re
 Route.post('publisher/register', 'PublisherController.processRegister')
 Route.get('publisher/logout', 'PublisherController.processLogout').as('publisher_logout')
 Route.get('publisher/games', 'PublisherController.games').as('publisher_games').middleware('auth:publisher')
+Route.get('publisher/games/add','PublisherController.addGame').as('publisher_add_game').middleware('auth:publisher')
+Route.post('publisher/games/add', 'PublisherController.processAdd').middleware('auth:publisher')
 
 
 Route.get('games/', 'GameController.index').as('all_games')
