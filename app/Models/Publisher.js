@@ -14,9 +14,9 @@ class Publisher extends Model {
      * A hook to hash the user password before saving
      * it to the database.
      */
-    this.addHook('beforeSave', async (publisherInstance) => {
-      if (publisherInstance.dirty.password) {
-        publisherInstance.password = await Hash.make(publisherInstance.password)
+    this.addHook('beforeSave', async (userInstance) => {
+      if (userInstance.dirty.password) {
+        userInstance.password = await Hash.make(userInstance.password)
       }
     })
   }
