@@ -11,12 +11,14 @@ class PublisherController {
   async processLogin({ auth, request, response }) {
     let formData = request.post()
     await auth.authenticator('publisher').attempt(formData.username, formData.password);
-    return response.route('publisher_show')
+    return response.route('publisher_games')
   }
 
-  async show({ auth }) {
+  async games({ auth,view }) {
     let userData = await auth.getUser()
-    return userData.username
+    return view.render('publishers/games',{
+      userData: userData
+    })
   }
 
   async processLogout({ auth, response }) {
