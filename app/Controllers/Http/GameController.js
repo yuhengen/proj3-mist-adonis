@@ -28,6 +28,7 @@ class GameController {
     newGame.release_date = formData.release_date
     newGame.description = formData.description
     newGame.publisher = formData.publisher
+    newGame.publisher_id = 1
     newGame.developer = formData.developer
     newGame.image = formData.image
     newGame.preview_1 = formData.preview_1

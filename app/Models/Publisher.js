@@ -7,6 +7,10 @@ const Hash = use('Hash')
 const Model = use('Model')
 
 class Publisher extends Model {
+  games() {
+    return this.hasMany('App/Models/Game')
+  }
+
   static boot() {
     super.boot()
 
