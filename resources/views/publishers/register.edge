@@ -5,49 +5,51 @@ Publisher Registration
 @endsection
 
 @section('content')
-<div class="d-flex justify-content-center flex-column" style="height:90vh;">
-
-<h1 style="text-align:center" class="m-3">Publisher Registration</h1>
-<form method="POST">
-  {{csrfField()}}
-  <div class="m-3">
-    <label class="form-label">Login Username:</label>
-    <input type="text" name="username" class="form-control {{hasErrorFor('username') ? 'is-invalid': ''}}" value="{{old('username')}}" />
-    @if(hasErrorFor('username'))
-    <div class='invalid-feedback'>{{getErrorFor('username')}}</div>
-    @endif
+<div class="d-flex justify-content-center flex-column">
+  <div class="d-flex justify-content-center align-items-center">
+    <img src="../images/mist-logo.png" class=" m-5" style="width:100px;"/>
+    <h1 class="mb-3">Publisher Registration</h1>
   </div>
-  <div class="m-3">
-    <label class="form-label">Password:</label>
-    <input type="password" name="password" class="form-control {{hasErrorFor('password') ? 'is-invalid': ''}}" value="{{old('password')}}"/>
-    @if(hasErrorFor('password'))
-    <div class='invalid-feedback'>{{getErrorFor('password')}}</div>
-    @endif
-  </div>
-  <div class="m-3">
-    <label class="form-label">Confirm Password:</label>
-    <input type="password" name="password_confirmation" class="form-control" value="{{old('password_confirmation')}}"/>
-  </div>
-  <div class="m-3">
-    <label class="form-label">CS Email Address:</label>
-    <input type="email" name="contact_email" class="form-control {{hasErrorFor('contact_email') ? 'is-invalid': ''}}" value="{{old('contact_email')}}" aria-describedby="emailHelp">
-    <small id="emailHelp" class="form-text text-muted">This email address will be used to contact your publisher team</small>
-    @if(hasErrorFor('contact_email'))
-    <div class='invalid-feedback'>{{getErrorFor('contact_email')}}</div>
-    @endif
-  </div>
-  <div class="m-3">
-    <label class="form-label">Publisher Name:</label>
-    <input type="text" name="publisher_name" class="form-control {{hasErrorFor('publisher_name') ? 'is-invalid': ''}}" value="{{old('publisher_name')}}" aria-describedby="publisherHelp"/>
-    <small id="publisherHelp" class="form-text text-muted">Make sure this is the official publisher name. This will be the Publisher name displayed on your games in the store</small>
-    @if(hasErrorFor('publisher_name'))
-    <div class='invalid-feedback'>{{getErrorFor('publisher_name')}}</div>
-    @endif
-  </div>
-  <div class="m-3">
-    <input type="submit" class="btn btn-primary"/>
-    <a href="{{route('publisher_login')}}" class="btn btn-danger m-3">Back</a>
-  </div>
-</form>
+  <form method="POST">
+    {{csrfField()}}
+    <div class="m-3">
+      <label class="form-label">Login Username:</label>
+      <input type="text" name="username" class="form-control {{hasErrorFor('username') ? 'is-invalid': ''}}" value="{{old('username')}}" />
+      @if(hasErrorFor('username'))
+      <div class='invalid-feedback'>{{getErrorFor('username')}}</div>
+      @endif
+    </div>
+    <div class="m-3">
+      <label class="form-label">Password:</label>
+      <input type="password" name="password" class="form-control {{hasErrorFor('password') ? 'is-invalid': ''}}" value="{{old('password')}}"/>
+      @if(hasErrorFor('password'))
+      <div class='invalid-feedback'>{{getErrorFor('password')}}</div>
+      @endif
+    </div>
+    <div class="m-3">
+      <label class="form-label">Confirm Password:</label>
+      <input type="password" name="password_confirmation" class="form-control" value="{{old('password_confirmation')}}"/>
+    </div>
+    <div class="m-3">
+      <label class="form-label">CS Email Address:</label>
+      <input type="email" name="contact_email" class="form-control {{hasErrorFor('contact_email') ? 'is-invalid': ''}}" value="{{old('contact_email')}}" aria-describedby="emailHelp">
+      <small id="emailHelp" class="form-text text-muted">This email address will be used to contact your publisher team</small>
+      @if(hasErrorFor('contact_email'))
+      <div class='invalid-feedback'>{{getErrorFor('contact_email')}}</div>
+      @endif
+    </div>
+    <div class="m-3">
+      <label class="form-label">Publisher Name:</label>
+      <input type="text" name="publisher_name" class="form-control {{hasErrorFor('publisher_name') ? 'is-invalid': ''}}" value="{{old('publisher_name')}}" aria-describedby="publisherHelp"/>
+      <small id="publisherHelp" class="form-text text-muted">Make sure this is the official publisher name. This will be the Publisher name displayed on your games in the store</small>
+      @if(hasErrorFor('publisher_name'))
+      <div class='invalid-feedback'>{{getErrorFor('publisher_name')}}</div>
+      @endif
+    </div>
+    <div class="m-3">
+      <input type="submit" class="btn btn-primary"/>
+      <a href="{{route('publisher_login')}}" class="btn btn-danger m-3">Back</a>
+    </div>
+  </form>
 </div>
 @endsection
