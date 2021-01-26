@@ -83,3 +83,27 @@ The wireframes of the project will be available soon...
 <img src="./documentation/proj3-logical-schema.jpg" style="margin: 0;">
 
 ---
+
+# Technologies
+- [ReactJS](https://reactjs.org/), [AdonisJS](https://adonisjs.com/) and CSS for structuring and styling the website
+- Javascript to implement interactivty with website
+- [Bootstrap](https://getbootstrap.com/) for Navbar and other Bootstrap components
+- [GitHub](https://github.com/) for version control and repositories
+- [GitPod](https://gitpod.io/) as coding platform
+- [Axios](https://github.com/axios/axios) to read from JSON files and database
+- [AdonisJS](https://adonisjs.com/) for admin page and data rendering
+- GIMP for image editing
+- [Am I Responsive Checker](http://ami.responsivedesign.is/) to ensure my platform is mobile responsive
+
+# Deployment
+## Steps taken to deploy the project to Github pages (Credits to Paul Chor for a detailed and simple guide)
+```
+1.
+```
+
+# Credits
+## Acknowledgement
+This project would not have been possible without my main lecturer, Paul Chor, for the skills and knowledge imparted to me, and teaching assistant, Shun, for the guidance during the building of the project during the bootcamp in Trent Global College.
+Big appreciation to AdonisJS and ReactJS documentations, w3schools, Stackoverflow forums, Bootstrap documentation.
+
+- [Adonis Validator](https://adonisjs.com/docs/4.1/validator) documentations and Paul's demo for form validations
