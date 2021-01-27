@@ -13,30 +13,37 @@ class PublisherController {
   async processLogin({ auth, request, response, session }) {
     let formData = request.post()
 
+    // Check if username is empty
     if (!formData.username) {
       session.withErrors({ username: 'Username cannot be empty' }).flashExcept();
       return response.redirect('back')
     }
 
+    // Access Publisher to see if username exists
     const user = await Publisher.findBy('username', formData.username);
 
+    // If username does not exist in database
     if (!user) {
       session.withErrors({ username: 'Username does not exist' }).flashExcept();
       return response.redirect('back')
     }
 
+    // Check if password is empty
     if (!formData.password) {
       session.withErrors({ password: 'Password cannot be empty' }).flashExcept();
       return response.redirect('back')
     }
 
+    // Verify password
     const matchPassword = await Hash.verify(formData.password, user.password)
 
+    // Check if password matches username
     if (!matchPassword) {
       session.withErrors({ password: 'Incorrect password' }).flashExcept();
       return response.redirect('back')
     }
 
+    // Login
     await auth.authenticator('publisher').attempt(formData.username, formData.password);
     return response.route('publisher_games')
   }

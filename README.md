@@ -104,6 +104,7 @@ The wireframes of the project will be available soon...
 # Credits
 ## Acknowledgement
 This project would not have been possible without my main lecturer, Paul Chor, for the skills and knowledge imparted to me, and teaching assistant, Shun, for the guidance during the building of the project during the bootcamp in Trent Global College.
-Big appreciation to AdonisJS and ReactJS documentations, w3schools, Stackoverflow forums, Bootstrap documentation.
+Big appreciation to AdonisJS and ReactJS documentations, [Adonis Forums](https://forum.adonisjs.com/), w3schools, Stackoverflow forums, Bootstrap documentation.
 
 - [Adonis Validator](https://adonisjs.com/docs/4.1/validator) documentations and Paul's demo for form validations
+- [Cloudinary](https://cloudinary.com/) and Paul's demo for uploading of images

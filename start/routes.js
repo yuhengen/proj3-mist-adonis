@@ -28,6 +28,9 @@ Route.get('publisher/games', 'PublisherController.games').as('publisher_games').
 Route.get('publisher/games/add','PublisherController.addGame').as('publisher_add_game').middleware('auth:publisher')
 Route.post('publisher/games/add', 'PublisherController.processAdd').middleware('auth:publisher')
 
+// Cloudinary routes
+Route.get('cloudinary/sign', 'CloudinaryController.sign').as('cloudinary_sign')
+
 
 Route.get('games/', 'GameController.index').as('all_games')
 Route.get('games-api/', 'GameController.gamesapi')
