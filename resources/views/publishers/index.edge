@@ -17,7 +17,7 @@ Publisher Login Portal
       @endif
   </div>
   <div class="form-group">
-    <input type="password" name="password" class="form-control {{hasErrorFor('password') ? 'is-invalid': ''}}" value="{{old('password')}}" placeholder="Enter password">
+    <input type="password" name="password" class="form-control {{hasErrorFor('password') ? 'is-invalid': ''}}" placeholder="Enter password">
       @if(hasErrorFor('password'))
       <div class='invalid-feedback'>{{getErrorFor('password')}}</div>
       @endif

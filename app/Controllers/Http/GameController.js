@@ -1,6 +1,7 @@
 'use strict'
 
 const Game = use('App/Models/Game')
+const Config = use('Config')
 
 class GameController {
   async index({ view }) {

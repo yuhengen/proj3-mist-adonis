@@ -4,6 +4,7 @@ const Publisher = use('App/Models/Publisher')
 const Game = use('App/Models/Game')
 const { validateAll } = use('Validator')
 const Hash = use('Hash')
+const Config = use('Config')
 
 class PublisherController {
   index({ view }) {
@@ -48,23 +49,77 @@ class PublisherController {
     return response.route('publisher_games')
   }
 
-  async games({ view }) {
-    return view.render('publishers/games')
+  async games({ auth, view }) {
+    const publisher = await Publisher.find(auth.user.id)
+    const games = await publisher.games().fetch()
+
+    return view.render('publishers/games', {
+      'games': games.toJSON()
+    })
   }
 
   async addGame({ view }) {
-    return view.render('publishers/add_game')
+    return view.render('publishers/add_game', {
+      cloudinaryName: Config.get('cloudinary.name'),
+      cloudinaryPreset: Config.get('cloudinary.preset'),
+      cloudinaryApiKey: Config.get('cloudinary.api_key'),
+      signUrl: '/cloudinary/sign'
+    })
   }
 
-  async processAdd({ auth, request, response }) {
+  async processAdd({ auth, request, response, session }) {
     const rules = {
       'title': 'required|unique:games',
-      'price': 'required|number|above:0',
-      'release_date': 'required|',
+      'price': 'required|above:0',
+      'release_date': 'required',
       'description': 'required',
       'developer': 'required',
+      'trailer': 'required',
       'image': 'required',
     }
+
+    const messages = {
+      'title.required': 'Title is required',
+      'title.unique': 'This game title already exists in our database',
+      'price.required': 'Price is required',
+      'price.above': 'Price needs to be more than 0',
+      'release_date.required': 'Date of release is required',
+      'description.required': 'Description is required',
+      'developer.required': 'Developer is required',
+      'trailer.required': 'A trailer link is required',
+      'image.required': 'A display image is required',
+    }
+
+    let formData = request.post()
+
+    const validation = await validateAll(formData, rules, messages)
+
+    if (validation.fails()) {
+      session.withErrors(validation.messages()).flashExcept([]);
+
+      return response.redirect('back')
+    }
+
+    let newGame = new Game()
+
+    newGame.title = formData.title
+    newGame.price = formData.price
+    newGame.release_date = formData.release_date
+    newGame.description = formData.description
+    newGame.publisher = auth.user.publisher_name
+    newGame.developer = formData.developer
+    newGame.trailer = formData.trailer
+    newGame.image = formData.image
+    newGame.publisher_id = auth.user.id
+    newGame.verified = false
+
+    await newGame.save()
+
+    session.flash({
+      notification: `${newGame.title} has been added and is pending approval`
+    })
+
+    return response.route('publisher_games')
   }
 
   async processLogout({ auth, response }) {

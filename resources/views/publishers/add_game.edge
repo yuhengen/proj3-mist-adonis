@@ -10,86 +10,103 @@ Add Game
 
 <form method="POST">
   {{csrfField()}}
-  <div class="m-2">
+  <div class="m-3">
     <label class="form-label">Game Title:</label>
     <input type="text" name="title" class="form-control {{hasErrorFor('title') ? 'is-invalid': ''}}" value="{{old('title')}}"/>
+      <small class="form-text text-muted">Title of game that will be displayed on the store</small>
       @if(hasErrorFor('title'))
       <div class='invalid-feedback'>{{getErrorFor('title')}}</div>
       @endif
   </div>
-  <div class="m-2">
+  <div class="m-3">
     <label class="form-label">Price (USD):</label>
     <input type="number" name="price" step="0.01" class="form-control {{hasErrorFor('price') ? 'is-invalid': ''}}" value="{{old('price')}}"/>
       @if(hasErrorFor('price'))
       <div class='invalid-feedback'>{{getErrorFor('price')}}</div>
       @endif
   </div>
-  <div class="m-2">
+  <div class="m-3">
     <label class="form-label">Release Date:</label>
     <input type="date" name="release_date" class="form-control {{hasErrorFor('release_date') ? 'is-invalid': ''}}" value="{{old('release_date')}}"/>
+      <small class="form-text text-muted">Displayed release date of the game</small>
       @if(hasErrorFor('release_date'))
       <div class='invalid-feedback'>{{getErrorFor('release_date')}}</div>
       @endif
   </div>
-  <div class="m-2">
+  <div class="m-3">
     <label class="form-label">Description:</label>
-    <textarea name="description" class="form-control {{hasErrorFor('description') ? 'is-invalid': ''}}" value="{{old('description')}}"></textarea>
+    <textarea name="description" class="form-control {{hasErrorFor('description') ? 'is-invalid': ''}}">{{old('description')}}</textarea>
+      <small class="form-text text-muted">Description of your game</small>
       @if(hasErrorFor('description'))
       <div class='invalid-feedback'>{{getErrorFor('description')}}</div>
       @endif
   </div>
-  <div class="m-2">
+  <div class="m-3">
     <label class="form-label">Developer:</label>
     <input type="text" name="developer" class="form-control {{hasErrorFor('developer') ? 'is-invalid': ''}}" value="{{old('developer')}}"/>
+      <small class="form-text text-muted">The developer of the game</small>
       @if(hasErrorFor('developer'))
       <div class='invalid-feedback'>{{getErrorFor('developer')}}</div>
       @endif
   </div>
-  <div class="m-2">
-    <label class="form-label">Game Banner (Image Link):</label>
-    <input type="text" name="image" class="form-control {{hasErrorFor('image') ? 'is-invalid': ''}}" value="{{old('image')}}"/>
+  <div class="m-3">
+    <label class="form-label">Video Trailer URL:</label>
+    <input type="text" name="trailer" class="form-control {{hasErrorFor('trailer') ? 'is-invalid': ''}}" value="{{old('trailer')}}"/>
+      <small class="form-text text-muted">Video trailer of your game (E.g YouTube Link)</small>
+      @if(hasErrorFor('trailer'))
+      <div class='invalid-feedback'>{{getErrorFor('trailer')}}</div>
+      @endif
+  </div>
+  <div class="m-3">
+    <label class="form-label">Game Display Image:</label><br/>
+    <a href='#' class="btn btn-primary" id="upload_widget">Upload Image</a>
+    <input type="hidden" name="image" id="image_url" class="form-control {{hasErrorFor('image') ? 'is-invalid': ''}}" value="{{old('image')}}"/>
+    <img src="{{old('image')}}" id="display_image" style="display:none;height:300px;"/>
       @if(hasErrorFor('image'))
       <div class='invalid-feedback'>{{getErrorFor('image')}}</div>
       @endif
   </div>
-  <div class="m-2">
-    <label class="form-label">Game Preview Image 1 (Image Link):</label>
-    <input type="text" name="preview_1" class="form-control {{hasErrorFor('preview_1') ? 'is-invalid': ''}}" value="{{old('preview_1')}}"/>
-      @if(hasErrorFor('preview_1'))
-      <div class='invalid-feedback'>{{getErrorFor('preview_1')}}</div>
-      @endif
-  </div>
-  <div class="m-2">
-    <label class="form-label">Game Preview Image 2 (Image Link):</label>
-    <input type="text" name="preview_2" class="form-control {{hasErrorFor('preview_2') ? 'is-invalid': ''}}" value="{{old('preview_2')}}"/>
-      @if(hasErrorFor('preview_2'))
-      <div class='invalid-feedback'>{{getErrorFor('preview_2')}}</div>
-      @endif
-  </div>
-  <div class="m-2">
-    <label class="form-label">Game Preview Image 3 (Image Link):</label>
-    <input type="text" name="preview_3" class="form-control {{hasErrorFor('preview_3') ? 'is-invalid': ''}}" value="{{old('preview_3')}}"/>
-      @if(hasErrorFor('preview_3'))
-      <div class='invalid-feedback'>{{getErrorFor('preview_3')}}</div>
-      @endif
-  </div>
-  <div class="m-2">
-    <label class="form-label">Game Preview Image 4 (Image Link):</label>
-    <input type="text" name="preview_4" class="form-control {{hasErrorFor('preview_4') ? 'is-invalid': ''}}" value="{{old('preview_4')}}"/>
-      @if(hasErrorFor('preview_4'))
-      <div class='invalid-feedback'>{{getErrorFor('preview_4')}}</div>
-      @endif
-  </div>
-  <div class="m-2">
-    <label class="form-label">Game Preview Image 5 (Image Link):</label>
-    <input type="text" name="preview_5" class="form-control {{hasErrorFor('preview_5') ? 'is-invalid': ''}}" value="{{old('preview_5')}}"/>
-      @if(hasErrorFor('preview_5'))
-      <div class='invalid-feedback'>{{getErrorFor('preview_5')}}</div>
-      @endif
-  </div class="m-2">
   <div class="mt-3">
-    <input type="submit" class="btn btn-primary"/>
+    <input type="submit" class="btn btn-success"/>
     <a href="{{route('publisher_games')}}" class="btn btn-danger m-3">Back</a>
   </div>
 </form>
+@endsection
+
+@section('scripts')
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+  <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+
+  <script>
+    function generateSignature(callback, params_to_sign){
+      // Get signature from Adonis
+      axios.get('/cloudinary/sign', {
+        params: {
+          params_to_sign
+        }
+      }).then(function(response){
+        callback(response.data)
+      })
+    }
+
+    let myWidget = cloudinary.createUploadWidget({
+      cloudName: '{{cloudinaryName}}',
+      apiKey:'{{cloudinaryApiKey}}',
+      uploadPreset:'{{cloudinaryPreset}}',
+      uploadSignature:generateSignature
+    }, (error,result)=>{
+      if (!error && result && result.event === 'success') {
+        console.log("Upload success!");
+        console.log(result.info);
+        document.querySelector('#image_url').value = result.info.url;
+        document.querySelector('#upload_widget').style.display = 'none';
+        document.querySelector('#display_image').src = result.info.url
+        document.querySelector('#display_image').style.display = 'block';
+      }
+    })
+
+    document.querySelector('#upload_widget').addEventListener('click',function(){
+      myWidget.open()
+    },false)
+  </script>
 @endsection

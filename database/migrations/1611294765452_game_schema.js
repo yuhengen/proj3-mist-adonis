@@ -19,6 +19,7 @@ class GameSchema extends Schema {
       table.string('preview_3', 200).notNullable()
       table.string('preview_4', 200).nullable()
       table.string('preview_5', 200).nullable()
+      table.boolean('verified').notNullable()
 
       table.integer('publisher_id').unsigned().notNullable();
       table.foreign('publisher_id').references('publishers.id');
