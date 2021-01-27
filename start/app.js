@@ -19,7 +19,8 @@ const providers = [
   '@adonisjs/shield/providers/ShieldProvider',
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/auth/providers/AuthProvider',
-  '@adonisjs/validator/providers/ValidatorProvider'
+  '@adonisjs/validator/providers/ValidatorProvider',
+  'adonis-4-cloudinary/provider/Cloudinary'
 ]
 
 /*
@@ -48,6 +49,7 @@ const aceProviders = [
 |
 */
 const aliases = {
+  Cloudinary: 'Adonis/Addons/AdonisCloudinary'
 }
 
 /*
