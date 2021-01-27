@@ -103,7 +103,7 @@ class PublisherController {
     let newGame = new Game()
 
     newGame.title = formData.title
-    newGame.price = formData.price*100
+    newGame.price = formData.price * 100
     newGame.release_date = formData.release_date
     newGame.description = formData.description
     newGame.publisher = auth.user.publisher_name
@@ -120,6 +120,13 @@ class PublisherController {
     })
 
     return response.route('publisher_games')
+  }
+
+  async updateGame({ view, params }) {
+    let game = await Game.find(params.game_id)
+    return view.render('publishers/update_game', {
+      game: game.toJSON()
+    })
   }
 
   async processLogout({ auth, response }) {

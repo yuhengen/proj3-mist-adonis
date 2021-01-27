@@ -24,9 +24,12 @@ Route.post('publisher/', 'PublisherController.processLogin')
 Route.get('publisher/register', 'PublisherController.register').as('publisher_register')
 Route.post('publisher/register', 'PublisherController.processRegister')
 Route.get('publisher/logout', 'PublisherController.processLogout').as('publisher_logout')
-Route.get('publisher/games', 'PublisherController.games').as('publisher_games').middleware('auth:publisher')
-Route.get('publisher/games/add','PublisherController.addGame').as('publisher_add_game').middleware('auth:publisher')
-Route.post('publisher/games/add', 'PublisherController.processAdd').middleware('auth:publisher')
+Route.group(() => {
+  Route.get('games', 'PublisherController.games').as('publisher_games').middleware('auth:publisher')
+  Route.get('games/add', 'PublisherController.addGame').as('publisher_add_game').middleware('auth:publisher')
+  Route.post('games/add', 'PublisherController.processAdd').middleware('auth:publisher')
+  Route.get('games/:game_id/update', 'PublisherController.updateGame').as('publisher_update_game')
+}).prefix('publisher').middleware('auth:publisher')
 
 // Cloudinary routes
 Route.get('cloudinary/sign', 'CloudinaryController.sign').as('cloudinary_sign')
