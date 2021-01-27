@@ -70,7 +70,7 @@ class PublisherController {
   async processAdd({ auth, request, response, session }) {
     const rules = {
       'title': 'required|unique:games',
-      'price': 'required|above:0',
+      'price': 'required',
       'release_date': 'required',
       'description': 'required',
       'developer': 'required',
@@ -103,7 +103,7 @@ class PublisherController {
     let newGame = new Game()
 
     newGame.title = formData.title
-    newGame.price = formData.price
+    newGame.price = formData.price*100
     newGame.release_date = formData.release_date
     newGame.description = formData.description
     newGame.publisher = auth.user.publisher_name

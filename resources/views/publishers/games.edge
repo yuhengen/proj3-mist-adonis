@@ -10,5 +10,37 @@ All Games
   <a href="{{route('publisher_add_game')}}" class="btn btn-primary ml-5 mr-5">Add New Game</a>
 </div>
 
+  <table class='table-bordered table-striped table-responsive' style="text-align:center">
 
+  @each(game in games)
+  <tr>
+    <th scope="col">ID</th>
+    <th scope="col" style="width:400px;">Title</th>
+    <th scope="col">Price</th>
+    <th scope="col">Developer</th>
+    <th scope="col">Publisher</th>
+    <th scope="col">Release Date</th>
+    <th scope="col">Verified</th>
+  </tr>
+  <tr>
+    <td>{{game.id}}</td>
+    <td>{{game.title}}</td>
+    <td>${{game.price/100}}</td>
+    <td>{{game.developer}}</td>
+    <td>{{game.publisher}}</td>
+    <td style="word-wrap: break-word;">{{game.release_date}}</td>
+    <td>{{game.verified}}</td>
+  </tr>
+  <tr>
+    <th scope="col" colspan="2">Description</th>
+    <th scope="col" colspan="3">Image</th>
+    <th scope="col" colspan="2">Trailer</th>
+  </tr>
+  <tr>
+    <td colspan="2">{{game.description}}</td>
+    <td colspan="3"><img src="{{game.image}}" style="width:200px"/></td>
+    <td colspan="2">{{game.trailer}}</td>
+  </tr>
+  @endeach
+</table>
 @endsection
