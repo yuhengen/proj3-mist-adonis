@@ -12,47 +12,80 @@ Add Game
   {{csrfField()}}
   <div class="m-2">
     <label class="form-label">Game Title:</label>
-    <input type="text" name="title" class="form-control"/>
+    <input type="text" name="title" class="form-control {{hasErrorFor('title') ? 'is-invalid': ''}}" value="{{old('title')}}"/>
+      @if(hasErrorFor('title'))
+      <div class='invalid-feedback'>{{getErrorFor('title')}}</div>
+      @endif
   </div>
   <div class="m-2">
     <label class="form-label">Price (USD):</label>
-    <input type="number" name="price" step="0.01" class="form-control"/>
+    <input type="number" name="price" step="0.01" class="form-control {{hasErrorFor('price') ? 'is-invalid': ''}}" value="{{old('price')}}"/>
+      @if(hasErrorFor('price'))
+      <div class='invalid-feedback'>{{getErrorFor('price')}}</div>
+      @endif
   </div>
   <div class="m-2">
     <label class="form-label">Release Date:</label>
-    <input type="date" name="release_date" class="form-control"/>
+    <input type="date" name="release_date" class="form-control {{hasErrorFor('release_date') ? 'is-invalid': ''}}" value="{{old('release_date')}}"/>
+      @if(hasErrorFor('release_date'))
+      <div class='invalid-feedback'>{{getErrorFor('release_date')}}</div>
+      @endif
   </div>
   <div class="m-2">
     <label class="form-label">Description:</label>
-    <textarea name="description" class="form-control"></textarea>
+    <textarea name="description" class="form-control {{hasErrorFor('description') ? 'is-invalid': ''}}" value="{{old('description')}}"></textarea>
+      @if(hasErrorFor('description'))
+      <div class='invalid-feedback'>{{getErrorFor('description')}}</div>
+      @endif
   </div>
   <div class="m-2">
     <label class="form-label">Developer:</label>
-    <input type="text" name="developer" class="form-control"/>
+    <input type="text" name="developer" class="form-control {{hasErrorFor('developer') ? 'is-invalid': ''}}" value="{{old('developer')}}"/>
+      @if(hasErrorFor('developer'))
+      <div class='invalid-feedback'>{{getErrorFor('developer')}}</div>
+      @endif
   </div>
   <div class="m-2">
     <label class="form-label">Game Banner (Image Link):</label>
-    <input type="text" name="image" class="form-control"/>
+    <input type="text" name="image" class="form-control {{hasErrorFor('image') ? 'is-invalid': ''}}" value="{{old('image')}}"/>
+      @if(hasErrorFor('image'))
+      <div class='invalid-feedback'>{{getErrorFor('image')}}</div>
+      @endif
   </div>
   <div class="m-2">
     <label class="form-label">Game Preview Image 1 (Image Link):</label>
-    <input type="text" name="preview_1" class="form-control"/>
+    <input type="text" name="preview_1" class="form-control {{hasErrorFor('preview_1') ? 'is-invalid': ''}}" value="{{old('preview_1')}}"/>
+      @if(hasErrorFor('preview_1'))
+      <div class='invalid-feedback'>{{getErrorFor('preview_1')}}</div>
+      @endif
   </div>
   <div class="m-2">
     <label class="form-label">Game Preview Image 2 (Image Link):</label>
-    <input type="text" name="preview_2" class="form-control"/>
+    <input type="text" name="preview_2" class="form-control {{hasErrorFor('preview_2') ? 'is-invalid': ''}}" value="{{old('preview_2')}}"/>
+      @if(hasErrorFor('preview_2'))
+      <div class='invalid-feedback'>{{getErrorFor('preview_2')}}</div>
+      @endif
   </div>
   <div class="m-2">
     <label class="form-label">Game Preview Image 3 (Image Link):</label>
-    <input type="text" name="preview_3" class="form-control"/>
+    <input type="text" name="preview_3" class="form-control {{hasErrorFor('preview_3') ? 'is-invalid': ''}}" value="{{old('preview_3')}}"/>
+      @if(hasErrorFor('preview_3'))
+      <div class='invalid-feedback'>{{getErrorFor('preview_3')}}</div>
+      @endif
   </div>
   <div class="m-2">
     <label class="form-label">Game Preview Image 4 (Image Link):</label>
-    <input type="text" name="preview_4" class="form-control"/>
+    <input type="text" name="preview_4" class="form-control {{hasErrorFor('preview_4') ? 'is-invalid': ''}}" value="{{old('preview_4')}}"/>
+      @if(hasErrorFor('preview_4'))
+      <div class='invalid-feedback'>{{getErrorFor('preview_4')}}</div>
+      @endif
   </div>
   <div class="m-2">
     <label class="form-label">Game Preview Image 5 (Image Link):</label>
-    <input type="text" name="preview_5" class="form-control"/>
+    <input type="text" name="preview_5" class="form-control {{hasErrorFor('preview_5') ? 'is-invalid': ''}}" value="{{old('preview_5')}}"/>
+      @if(hasErrorFor('preview_5'))
+      <div class='invalid-feedback'>{{getErrorFor('preview_5')}}</div>
+      @endif
   </div class="m-2">
   <div class="mt-3">
     <input type="submit" class="btn btn-primary"/>

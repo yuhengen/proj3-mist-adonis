@@ -3,35 +3,61 @@
 const Publisher = use('App/Models/Publisher')
 const Game = use('App/Models/Game')
 const { validateAll } = use('Validator')
+const Hash = use('Hash')
 
 class PublisherController {
   index({ view }) {
     return view.render('publishers/index')
   }
 
-  async processLogin({ auth, request, response }) {
+  async processLogin({ auth, request, response, session }) {
     let formData = request.post()
+
+    if (!formData.username) {
+      session.withErrors({ username: 'Username cannot be empty' }).flashExcept();
+      return response.redirect('back')
+    }
+
+    const user = await Publisher.findBy('username', formData.username);
+
+    if (!user) {
+      session.withErrors({ username: 'Username does not exist' }).flashExcept();
+      return response.redirect('back')
+    }
+
+    if (!formData.password) {
+      session.withErrors({ password: 'Password cannot be empty' }).flashExcept();
+      return response.redirect('back')
+    }
+
+    const matchPassword = await Hash.verify(formData.password, user.password)
+
+    if (!matchPassword) {
+      session.withErrors({ password: 'Incorrect password' }).flashExcept();
+      return response.redirect('back')
+    }
+
     await auth.authenticator('publisher').attempt(formData.username, formData.password);
     return response.route('publisher_games')
   }
 
-  async games({ auth, view }) {
-    let userData = await auth.getUser()
-    return view.render('publishers/games', {
-      userData: userData
-    })
+  async games({ view }) {
+    return view.render('publishers/games')
   }
 
-  async addGame({ auth, view }) {
-    let userData = await auth.getUser()
-    return view.render('publishers/add_game', {
-      userData: userData
-    })
+  async addGame({ view }) {
+    return view.render('publishers/add_game')
   }
 
-  async processAdd({ auth, request, response}){
-    let userData = await auth.getUser()
-    console.log(userData.id)
+  async processAdd({ auth, request, response }) {
+    const rules = {
+      'title': 'required|unique:games',
+      'price': 'required|number|above:0',
+      'release_date': 'required|',
+      'description': 'required',
+      'developer': 'required',
+      'image': 'required',
+    }
   }
 
   async processLogout({ auth, response }) {
