@@ -99,7 +99,6 @@ Add Game
         console.log("Upload success!");
         console.log(result.info);
         document.querySelector('#image_url').value = result.info.url;
-        document.querySelector('#upload_widget').style.display = 'none';
         document.querySelector('#display_image').src = result.info.url
         document.querySelector('#display_image').style.display = 'block';
       }

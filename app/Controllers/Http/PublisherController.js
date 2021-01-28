@@ -7,10 +7,12 @@ const Hash = use('Hash')
 const Config = use('Config')
 
 class PublisherController {
+  // LOGIN PAGE
   index({ view }) {
     return view.render('publishers/index')
   }
 
+  // PROCESS LOGIN
   async processLogin({ auth, request, response, session }) {
     let formData = request.post()
 
@@ -49,6 +51,7 @@ class PublisherController {
     return response.route('publisher_games')
   }
 
+  // GAMES PAGE
   async games({ auth, view }) {
     const publisher = await Publisher.find(auth.user.id)
     const games = await publisher.games().fetch()
@@ -58,6 +61,7 @@ class PublisherController {
     })
   }
 
+  // ADD GAME FORM
   async addGame({ view }) {
     return view.render('publishers/add_game', {
       cloudinaryName: Config.get('cloudinary.name'),
@@ -67,7 +71,8 @@ class PublisherController {
     })
   }
 
-  async processAdd({ auth, request, response, session }) {
+  // PROCESS ADD GAME
+  async processAddGame({ auth, request, response, session }) {
     const rules = {
       'title': 'required|unique:games',
       'price': 'required',
@@ -122,22 +127,90 @@ class PublisherController {
     return response.route('publisher_games')
   }
 
-  async updateGame({ view, params }) {
-    let game = await Game.find(params.game_id)
-    return view.render('publishers/update_game', {
-      game: game.toJSON()
-    })
+  // UPDATE GAME FORM
+  async updateGame({ view, params, response, auth }) {
+    try {
+      let game = await Game.find(params.game_id)
+      if (auth.user.id == game.publisher_id) {
+        return view.render('publishers/update_game', {
+          game: game.toJSON(),
+          cloudinaryName: Config.get('cloudinary.name'),
+          cloudinaryPreset: Config.get('cloudinary.preset'),
+          cloudinaryApiKey: Config.get('cloudinary.api_key'),
+          signUrl: '/cloudinary/sign'
+        })
+      }
+    } catch (error) {
+      return response.status(400).json({
+        status: 'error',
+        message: 'Unauthorized access.'
+      })
+    }
   }
 
+  // PROCESS UPDATE GAME
+  async processUpdateGame({ request, response, params,session }) {
+
+    let game = await Game.find(params.game_id)
+
+    const rules = {
+      'title': `required|unique:games,title,id,${game.id}`,
+      'price': 'required',
+      'description': 'required',
+      'developer': 'required',
+      'trailer': 'required',
+      'image': 'required',
+    }
+
+    const messages = {
+      'title.required': 'Title is required',
+      'title.unique': 'This game title already exists in our database',
+      'price.required': 'Price is required',
+      'price.above': 'Price needs to be more than 0',
+      'description.required': 'Description is required',
+      'developer.required': 'Developer is required',
+      'trailer.required': 'A trailer link is required',
+      'image.required': 'A display image is required',
+    }
+
+    let formData = request.post()
+
+    const validation = await validateAll(formData, rules, messages)
+
+    if (validation.fails()) {
+      session.withErrors(validation.messages()).flashExcept([]);
+
+      return response.redirect('back')
+    }
+
+    game.title = formData.title
+    game.price = formData.price * 100
+    game.description = formData.description
+    game.developer = formData.developer
+    game.trailer = formData.trailer
+    game.image = formData.image
+
+    game.save()
+
+    session.flash({
+      notification: `${game.title} has been updated!`
+    })
+
+    return response.route('publisher_games')
+  }
+
+  // PROCESS LOGOUT
   async processLogout({ auth, response }) {
     await auth.logout()
     return response.route('publisher_login')
   }
 
+  // REGISTER FORM
   register({ view }) {
     return view.render('publishers/register')
   }
 
+  // PROCESS REGISTER FORM
   async processRegister({ request, response, session }) {
     const rules = {
       'username': 'required|min:6|max:20|alpha_numeric|unique:publishers',

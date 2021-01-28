@@ -20,7 +20,7 @@ Update Game
   </div>
   <div class="m-3">
     <label class="form-label">Price (USD):</label>
-    <input type="number" name="price" step="0.01" min="0" class="form-control {{hasErrorFor('price') ? 'is-invalid': ''}}" value="{{game.price}}"/>
+    <input type="number" name="price" step="0.01" min="0" class="form-control {{hasErrorFor('price') ? 'is-invalid': ''}}" value="{{game.price/100}}"/>
       @if(hasErrorFor('price'))
       <div class='invalid-feedback'>{{getErrorFor('price')}}</div>
       @endif
@@ -51,9 +51,9 @@ Update Game
   </div>
   <div class="m-3">
     <label class="form-label">Game Display Image:</label>
-    <a href='#' class="btn btn-primary" id="upload_widget">Upload Image</a><br/>
-    <input type="hidden" name="image" id="image_url" class="form-control {{hasErrorFor('image') ? 'is-invalid': ''}}" value="game.image}}"/>
-    <img src="{{game.image}}" id="display_image" style="height:300px;"/>
+    <a href='#' class="btn btn-primary mb-3 upload_widget">Upload Image</a><br/>
+    <input type="hidden" name="image" class="image_url form-control {{hasErrorFor('image') ? 'is-invalid': ''}}" value="{{game.image}}"/>
+    <img src="{{game.image}}" class="display_image" style="height:300px;"/>
       @if(hasErrorFor('image'))
       <div class='invalid-feedback'>{{getErrorFor('image')}}</div>
       @endif
@@ -90,14 +90,13 @@ Update Game
       if (!error && result && result.event === 'success') {
         console.log("Upload success!");
         console.log(result.info);
-        document.querySelector('#image_url').value = result.info.url;
-        document.querySelector('#upload_widget').style.display = 'none';
-        document.querySelector('#display_image').src = result.info.url
-        document.querySelector('#display_image').style.display = 'block';
+        document.querySelector('.image_url').value = result.info.url;
+        document.querySelector('.display_image').src = result.info.url
+        document.querySelector('.display_image').style.display = 'block';
       }
     })
 
-    document.querySelector('#upload_widget').addEventListener('click',function(){
+    document.querySelector('.upload_widget').addEventListener('click',function(){
       myWidget.open()
     },false)
   </script>
