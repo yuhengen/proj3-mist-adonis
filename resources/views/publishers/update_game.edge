@@ -42,6 +42,18 @@ Update Game
       @endif
   </div>
   <div class="m-3">
+    <label class="form-label">Game Tags:</label>
+    <select class="tags form-control {{hasErrorFor('tags') ? 'is-invalid': ''}}" value="{{game.tags}}" name="tags[]" multiple="multiple">
+      @each(tag in tags)
+        <option value="{{tag.id}}">{{tag.tag_name}}</option>
+      @endeach
+    </select>
+      <small class="form-text text-muted">Select the tags and categories related to your game</small>
+      @if(hasErrorFor('tags'))
+      <div class='invalid-feedback'>{{getErrorFor('tags')}}</div>
+      @endif
+  </div>
+  <div class="m-3">
     <label class="form-label">Video Trailer URL:</label>
     <input type="text" name="trailer" class="form-control {{hasErrorFor('trailer') ? 'is-invalid': ''}}" value="{{game.trailer}}"/>
       <small class="form-text text-muted">Video trailer of your game (E.g YouTube Link)</small>
@@ -99,5 +111,11 @@ Update Game
     document.querySelector('.upload_widget').addEventListener('click',function(){
       myWidget.open()
     },false)
+  </script>
+
+  <script>
+    $(document).ready(function() {
+      $('.tags').select2();
+    });
   </script>
 @endsection

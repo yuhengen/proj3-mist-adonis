@@ -8,7 +8,7 @@ values
   );
 
 
-insert into tag (tag_name) values
+insert into tags (tag_name) values
 ('Action'),
 ('Adventure'),
 ('Anime'),
@@ -27,4 +27,4 @@ insert into tag (tag_name) values
 ('Single Player'),
 ('Story Rich'),
 ('Strategy'),
-('Third Person')
+('Third Person');

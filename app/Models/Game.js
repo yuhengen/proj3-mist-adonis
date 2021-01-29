@@ -4,9 +4,13 @@
 const Model = use('Model')
 
 class Game extends Model {
-    publisher() {
-      return this.belongsTo('App/Models/Publisher')
-    }
+  publisher() {
+    return this.belongsTo('App/Models/Publisher')
+  }
+
+  tags() {
+    return this.belongsToMany('App/Models/Tag')
+  }
 }
 
 module.exports = Game

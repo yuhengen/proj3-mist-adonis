@@ -2,6 +2,7 @@
 
 const Publisher = use('App/Models/Publisher')
 const Game = use('App/Models/Game')
+const Tag = use('App/Models/Tag')
 const { validateAll } = use('Validator')
 const Hash = use('Hash')
 const Config = use('Config')
@@ -54,16 +55,19 @@ class PublisherController {
   // GAMES PAGE
   async games({ auth, view }) {
     const publisher = await Publisher.find(auth.user.id)
-    const games = await publisher.games().with('publisher').fetch()
+    const games = await publisher.games().with('publisher').with('tags').fetch()
 
-    return view.render('publishers/games', {
-      'games': games.toJSON()
-    })
+    // return view.render('publishers/games', {
+    //   'games': games.toJSON()
+    // })
+    return games.toJSON()
   }
 
   // ADD GAME FORM
   async addGame({ view }) {
+    let tags = await Tag.all()
     return view.render('publishers/add_game', {
+      tags: tags.toJSON(),
       cloudinaryName: Config.get('cloudinary.name'),
       cloudinaryPreset: Config.get('cloudinary.preset'),
       cloudinaryApiKey: Config.get('cloudinary.api_key'),
@@ -79,6 +83,7 @@ class PublisherController {
       'release_date': 'required',
       'description': 'required',
       'developer': 'required',
+      'tags':'required',
       'trailer': 'required',
       'image': 'required',
     }
@@ -91,6 +96,7 @@ class PublisherController {
       'release_date.required': 'Date of release is required',
       'description.required': 'Description is required',
       'developer.required': 'Developer is required',
+      'tags.required':'Please select at least 1 tag',
       'trailer.required': 'A trailer link is required',
       'image.required': 'A display image is required',
     }
@@ -111,8 +117,8 @@ class PublisherController {
     newGame.price = formData.price * 100
     newGame.release_date = formData.release_date
     newGame.description = formData.description
-    newGame.publisher = auth.user.publisher_name
     newGame.developer = formData.developer
+    newGame.tags().attach(formData.tags)
     newGame.trailer = formData.trailer
     newGame.image = formData.image
     newGame.publisher_id = auth.user.id
@@ -131,8 +137,10 @@ class PublisherController {
   async updateGame({ view, params, response, auth }) {
     try {
       let game = await Game.find(params.game_id)
+      let tags = await Tag.all()
       if (auth.user.id == game.publisher_id) {
         return view.render('publishers/update_game', {
+          tags: tags.toJSON(),
           game: game.toJSON(),
           cloudinaryName: Config.get('cloudinary.name'),
           cloudinaryPreset: Config.get('cloudinary.preset'),
