@@ -108,3 +108,4 @@ Big appreciation to AdonisJS and ReactJS documentations, [Adonis Forums](https:/
 
 - [Adonis Validator](https://adonisjs.com/docs/4.1/validator) documentations and Paul's demo for form validations
 - [Cloudinary](https://cloudinary.com/) and Paul's demo for uploading of images
+- [Select2](https://select2.org/) for category selection
