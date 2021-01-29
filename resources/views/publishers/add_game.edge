@@ -58,10 +58,10 @@ Add Game
       @endif
   </div>
   <div class="m-3">
-    <label class="form-label">Game Display Image:</label><br/>
-    <a href='#' class="btn btn-primary" id="upload_widget">Upload Image</a>
-    <input type="hidden" name="image" id="image_url" class="form-control {{hasErrorFor('image') ? 'is-invalid': ''}}" value="{{old('image')}}"/>
-    <img src="{{old('image')}}" id="display_image" style="display:none;height:300px;"/>
+    <label class="form-label">Game Display Image:</label>
+    <a href='#' class="btn btn-primary mb-3 upload_widget">Upload Image</a><br/>
+    <input type="hidden" name="image" class="image_url form-control {{hasErrorFor('image') ? 'is-invalid': ''}}" value="{{old('image')}}"/>
+    <img src="{{old('image')}}" class="display_image" style="height:300px;"/>
       @if(hasErrorFor('image'))
       <div class='invalid-feedback'>{{getErrorFor('image')}}</div>
       @endif
@@ -98,13 +98,13 @@ Add Game
       if (!error && result && result.event === 'success') {
         console.log("Upload success!");
         console.log(result.info);
-        document.querySelector('#image_url').value = result.info.url;
-        document.querySelector('#display_image').src = result.info.url
-        document.querySelector('#display_image').style.display = 'block';
+        document.querySelector('.image_url').value = result.info.url;
+        document.querySelector('.display_image').src = result.info.url
+        document.querySelector('.display_image').style.display = 'block';
       }
     })
 
-    document.querySelector('#upload_widget').addEventListener('click',function(){
+    document.querySelector('.upload_widget').addEventListener('click',function(){
       myWidget.open()
     },false)
   </script>

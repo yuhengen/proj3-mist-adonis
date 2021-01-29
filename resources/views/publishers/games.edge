@@ -14,34 +14,43 @@
 
   @each(game in games)
   <tr>
-    <th scope="col">Game ID</th>
-    <th scope="col" style="width:400px;">Title</th>
-    <th scope="col">Price</th>
-    <th scope="col">Developer</th>
-    <th scope="col">Publisher</th>
-    <th scope="col">Release Date</th>
-    <th scope="col" style="width:80px;">Verified</th>
-    <th rowspan="3" style="width:80px;"><a href="{{ route('publisher_update_game', {game_id:game.id})}}" class="btn btn-warning">Update</a></th>
+    <th scope="col" class="table-dark">Game ID</th>
+    <th scope="col" class="table-dark" style="width:400px;">Title</th>
+    <th scope="col" class="table-dark">Price</th>
+    <th scope="col" class="table-dark">Developer</th>
+    <th scope="col" class="table-dark">Publisher</th>
+    <th scope="col" class="table-dark">Release Date</th>
+    <th scope="col" class="table-dark" style="width:80px;">Verified</th>
+    <th scope="col" class="table-dark" style="width:80px;">Actions</th>
   </tr>
   <tr>
-    <td rowspan="3">{{game.id}}</td>
-    <td>{{game.title}}</td>
+    <td rowspan="5"><b>{{game.id}}</b></td>
+    <td><b>{{game.title}}</b></td>
     <td>${{game.price/100}}</td>
     <td>{{game.developer}}</td>
-    <td>{{game.publisher}}</td>
+    <td>{{game.publisher.publisher_name}}</td>
     <td style="word-wrap: break-word;">{{game.release_date}}</td>
-    <td rowspan="3">{{game.verified}}</td>
+    <td rowspan="5">{{game.verified}}</td>
+    <td rowspan="4"><a href="{{ route('publisher_update_game', {game_id:game.id})}}" class="btn btn-warning">Update</a></td>
   </tr>
   <tr>
-    <th scope="col" colspan="2">Description</th>
+    <th scope='col' colspan="5">Description</th>
+  </tr>
+  <tr>
+    <td colspan="5">{{game.description}}</td>
+  </tr>
+  <tr>
+    <th scope="col" colspan="2">Genre</th>
     <th scope="col" colspan="2">Image</th>
     <th scope="col">Trailer</th>
   </tr>
   <tr>
-    <td colspan="2">{{game.description}}</td>
-    <td colspan="2"><img src="{{game.image}}" style="width:200px"/></td>
-    <td>{{game.trailer}}</td>
-    <td><a href="{{ route('publisher_delete_game', {game_id:game.id})}}" class="btn btn-danger">Update</a></td>
+    <td colspan="2">NIL</td>
+    <td colspan="2"><img src="{{game.image}}" style="height:150px"/></td>
+    <td><iframe width="267" height="160" src="{{game.trailer}}" frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+				allowfullscreen></iframe></td>
+    <td><a href="{{ route('publisher_delete_game', {game_id:game.id})}}" class="btn btn-danger">Delete</a></td>
   </tr>
   @endeach
 </table>

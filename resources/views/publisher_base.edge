@@ -17,6 +17,10 @@
     </title>
   </head>
   <body>
+    @if(flashMessage('notification'))
+      <div class="alert alert-danger">{{ flashMessage('notification') }}</div>
+    @endif
+
     <div class="sidenav">
       <div class="mb-3 d-flex flex-column align-items-center" style="text-align:center;">
       <img src="/images/mist-logo.png" class=" mb-3" style="width:120px;"/>
@@ -27,11 +31,12 @@
         <a class="mb-2 mt-2" href="#">Home</a>
         <a class="mb-2 mt-2" href="{{route('publisher_games')}}">Games</a>
         <a class="mb-2 mt-2" href="#">Sales</a>
+        <a class="mb-2 mt-2" href="{{route('publisher_profile')}}">Profile</a>
         <a class="mb-2 mt-2" href="{{route('publisher_logout')}}">Logout</a>
         </div>
       </div>
     </div>
-    <div class="main" style="width:85vw; margin-left:180px;">
+    <div class="main" style="width:85vw; margin-left:170px;">
       <div class="m-3">
           @section("content")
           @endsection

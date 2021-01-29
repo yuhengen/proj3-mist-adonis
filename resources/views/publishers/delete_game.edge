@@ -1,0 +1,25 @@
+@layout('publisher_base')
+
+@section('title')
+Delete Game
+@endsection
+
+@section('content')
+
+<h1>Deleting {{game.title}}</h1>
+
+<form method="POST">
+  {{csrfField()}}
+  <div class="alert alert-danger mt-3">
+    <div class="m-2">
+      Are you sure you want to delete <b>{{game.title}}</b>?<br/>
+      The game will be permanently removed from the Mist store. This action cannot be reversed!!
+    </div>
+    <div class="m-2">
+      <button type="submit" class="btn btn-danger">Confirm</button>
+      <a href="{{route('publisher_games')}}" class="btn btn-success m-3">Back</a>
+    </div>
+  </div>
+</form>
+
+@endsection

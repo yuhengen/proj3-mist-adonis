@@ -54,7 +54,7 @@ class PublisherController {
   // GAMES PAGE
   async games({ auth, view }) {
     const publisher = await Publisher.find(auth.user.id)
-    const games = await publisher.games().fetch()
+    const games = await publisher.games().with('publisher').fetch()
 
     return view.render('publishers/games', {
       'games': games.toJSON()
@@ -149,7 +149,7 @@ class PublisherController {
   }
 
   // PROCESS UPDATE GAME
-  async processUpdateGame({ request, response, params,session }) {
+  async processUpdateGame({ request, response, params, session }) {
 
     let game = await Game.find(params.game_id)
 
@@ -197,6 +197,33 @@ class PublisherController {
     })
 
     return response.route('publisher_games')
+  }
+
+  // DELETE GAME PAGE
+  async deleteGame({ params, view, response, session }) {
+    try {
+      let game = await Game.find(params.game_id)
+
+      if (auth.user.id == game.publisher_id) {
+        return view.render('publishers/delete_game', {
+          game: game.toJSON()
+        })
+      }
+    } catch (error) {
+      return response.status(400).json({
+        status: 'error',
+        message: 'Unauthorized access.'
+      })
+    }
+  }
+
+  // PROCESS DELETE GAME
+  async processDeleteGame({ params, response }) {
+    let game = await Game.find(params.game_id)
+
+    await game.delete()
+
+    response.route('publisher_games')
   }
 
   // PROCESS LOGOUT
