@@ -1,12 +1,12 @@
 @layout('publisher_base')
 
 @section('title')
-Update Game
+Update Game | MiST
 @endsection
 
 @section('content')
 
-<h1>Update {{game.title}} | MiST</h1>
+<h1 class="m-3">Update {{game.title}}</h1>
 
 <form method="POST">
   {{csrfField()}}
