@@ -1,6 +1,8 @@
 'use strict'
 
 const Game = use('App/Models/Game')
+const Publisher = use('App/Models/Publisher')
+const Tag = use('App/Models/Tag')
 const Config = use('Config')
 
 class GameController {
@@ -12,8 +14,9 @@ class GameController {
   }
 
   async gamesapi() {
-    let allGames = await Game.all();
-    return allGames.toJSON()
+    // let allGames = await Game.all();
+    let gamesData = await Game.query().with('publisher', (builder) => builder.select('id', 'publisher_name', 'contact_email')).with('tags', (builder) => builder.select('id', 'tag_name')).fetch()
+    return gamesData.toJSON()
   }
 
   add({ view }) {
@@ -25,7 +28,7 @@ class GameController {
     let newGame = new Game();
 
     newGame.title = formData.title
-    newGame.price = formData.price*100
+    newGame.price = formData.price * 100
     newGame.release_date = formData.release_date
     newGame.description = formData.description
     newGame.publisher = formData.publisher
