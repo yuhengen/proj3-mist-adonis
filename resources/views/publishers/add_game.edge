@@ -28,7 +28,7 @@ Add Game
   <div class="m-3">
     <label class="form-label">Release Date:</label>
     <input type="date" name="release_date" class="form-control {{hasErrorFor('release_date') ? 'is-invalid': ''}}" value="{{old('release_date')}}"/>
-      <small class="form-text text-muted">Displayed release date of the game</small>
+      <small class="form-text text-muted">Displayed release date of the game (THIS CANNOT BE MODIFIED ONCE CREATED)</small>
       @if(hasErrorFor('release_date'))
       <div class='invalid-feedback'>{{getErrorFor('release_date')}}</div>
       @endif

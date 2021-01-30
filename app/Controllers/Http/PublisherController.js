@@ -246,23 +246,6 @@ class PublisherController {
       }
     }
 
-    // if (gametags.toJSON().length !== 0) {
-    //   for (let gt of gametags.toJSON()) {
-    //     console.log(gt.id)
-    //     for (let tag of formData.tags) {
-    //       console.log(tag)
-    //       if (gt.id !== tag) {
-    //         game.tags().attach(tag)
-    //       }
-    //     }
-    //   }
-    // } else {
-    //   for (let tag of formData.tags) {
-    //     console.log(tag)
-    //     game.tags().attach(tag)
-    //   }
-    // }
-
     session.flash({
       notification: `${game.title} has been updated!`
     })
@@ -271,7 +254,7 @@ class PublisherController {
   }
 
   // DELETE GAME PAGE
-  async deleteGame({ params, view, response, session }) {
+  async deleteGame({ auth, params, view, response, session }) {
     try {
       let game = await Game.find(params.game_id)
 
@@ -292,6 +275,7 @@ class PublisherController {
   async processDeleteGame({ params, response }) {
     let game = await Game.find(params.game_id)
 
+    await game.tags().detach()
     await game.delete()
 
     response.route('publisher_games')
