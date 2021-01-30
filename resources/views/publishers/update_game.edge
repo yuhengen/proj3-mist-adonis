@@ -43,10 +43,10 @@ Update Game
   </div>
   <div class="m-3">
     <label class="form-label">Game Tags:</label>
-    <select class="tags form-control {{hasErrorFor('tags') ? 'is-invalid': ''}}" value="{{game.tags}}" name="tags[]" multiple="multiple">
-      @each(tag in tags)
-        <option value="{{tag.id}}">{{tag.tag_name}}</option>
-      @endeach
+    <select class="tags form-control {{hasErrorFor('tags') ? 'is-invalid': ''}}" name="tags[]" multiple="multiple">
+        @each(tag in tags)
+          <option value="{{tag.id}}" {{tagArray.includes(tag.id) ? 'selected' : ''}}>{{tag.tag_name}}</option>
+        @endeach
     </select>
       <small class="form-text text-muted">Select the tags and categories related to your game</small>
       @if(hasErrorFor('tags'))

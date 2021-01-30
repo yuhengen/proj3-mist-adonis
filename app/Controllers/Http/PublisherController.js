@@ -55,12 +55,13 @@ class PublisherController {
   // GAMES PAGE
   async games({ auth, view }) {
     const publisher = await Publisher.find(auth.user.id)
+
     const games = await publisher.games().with('publisher').with('tags').fetch()
 
-    // return view.render('publishers/games', {
-    //   'games': games.toJSON()
-    // })
-    return games.toJSON()
+    return view.render('publishers/games', {
+      'games': games.toJSON()
+    })
+    // return games.toJSON()
   }
 
   // ADD GAME FORM
@@ -83,7 +84,7 @@ class PublisherController {
       'release_date': 'required',
       'description': 'required',
       'developer': 'required',
-      'tags':'required',
+      'tags': 'required',
       'trailer': 'required',
       'image': 'required',
     }
@@ -96,7 +97,7 @@ class PublisherController {
       'release_date.required': 'Date of release is required',
       'description.required': 'Description is required',
       'developer.required': 'Developer is required',
-      'tags.required':'Please select at least 1 tag',
+      'tags.required': 'Please select at least 1 tag',
       'trailer.required': 'A trailer link is required',
       'image.required': 'A display image is required',
     }
@@ -118,13 +119,16 @@ class PublisherController {
     newGame.release_date = formData.release_date
     newGame.description = formData.description
     newGame.developer = formData.developer
-    newGame.tags().attach(formData.tags)
     newGame.trailer = formData.trailer
     newGame.image = formData.image
     newGame.publisher_id = auth.user.id
     newGame.verified = false
 
     await newGame.save()
+
+    for (let t of formData.tags) {
+      await newGame.tags().attach(t)
+    }
 
     session.flash({
       notification: `${newGame.title} has been added and is pending approval`
@@ -135,12 +139,24 @@ class PublisherController {
 
   // UPDATE GAME FORM
   async updateGame({ view, params, response, auth }) {
+    let game = await Game.find(params.game_id)
+    let tags = await Tag.all()
+    let gametags = await game.tags().with('games').fetch()
+
+    let tagArray = []
+    for (let gt of gametags.toJSON()) {
+      tagArray.push(gt.id)
+    }
+
+    console.log(tagArray)
+
     try {
-      let game = await Game.find(params.game_id)
-      let tags = await Tag.all()
+      // const game = await gameinfo.with('tags').fetch()
       if (auth.user.id == game.publisher_id) {
         return view.render('publishers/update_game', {
           tags: tags.toJSON(),
+          gametags: gametags.toJSON(),
+          tagArray: tagArray,
           game: game.toJSON(),
           cloudinaryName: Config.get('cloudinary.name'),
           cloudinaryPreset: Config.get('cloudinary.preset'),
@@ -160,12 +176,15 @@ class PublisherController {
   async processUpdateGame({ request, response, params, session }) {
 
     let game = await Game.find(params.game_id)
+    let tags = await Tag.all()
+    let gametags = await game.tags().with('games').fetch()
 
     const rules = {
       'title': `required|unique:games,title,id,${game.id}`,
       'price': 'required',
       'description': 'required',
       'developer': 'required',
+      'tags': 'required',
       'trailer': 'required',
       'image': 'required',
     }
@@ -177,6 +196,7 @@ class PublisherController {
       'price.above': 'Price needs to be more than 0',
       'description.required': 'Description is required',
       'developer.required': 'Developer is required',
+      'tags.required': 'Please select at least 1 tag',
       'trailer.required': 'A trailer link is required',
       'image.required': 'A display image is required',
     }
@@ -199,6 +219,49 @@ class PublisherController {
     game.image = formData.image
 
     game.save()
+
+    let tagArray = []
+    for (let gt of gametags.toJSON()) {
+      tagArray.push(gt.id)
+    }
+
+    let newTags = []
+    for (let tagID of formData.tags) {
+      newTags.push(parseInt(tagID))
+    }
+
+    for (let gts of tagArray) {
+      if (!newTags.includes(parseInt(gts))) {
+        await game.tags().detach(gts)
+      }
+    }
+
+    for (let tag of newTags) {
+      if (tagArray.length !== 0) {
+        if (!tagArray.includes(parseInt(tag))) {
+          await game.tags().attach(tag)
+        }
+      } else {
+        await game.tags().attach(tag)
+      }
+    }
+
+    // if (gametags.toJSON().length !== 0) {
+    //   for (let gt of gametags.toJSON()) {
+    //     console.log(gt.id)
+    //     for (let tag of formData.tags) {
+    //       console.log(tag)
+    //       if (gt.id !== tag) {
+    //         game.tags().attach(tag)
+    //       }
+    //     }
+    //   }
+    // } else {
+    //   for (let tag of formData.tags) {
+    //     console.log(tag)
+    //     game.tags().attach(tag)
+    //   }
+    // }
 
     session.flash({
       notification: `${game.title} has been updated!`

@@ -1,3 +1,10 @@
+body {
+  height: 100%;
+  width:100%;
+  margin:0;
+  padding:0;
+}
+
 .sidenav {
   height: 100%;
   width: 170px;
@@ -22,5 +29,6 @@
 }
 
 .main {
-  margin-left: 160px;
+  margin-left: 170px;
+  width: calc(100%-170px);
 }
