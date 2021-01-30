@@ -148,10 +148,7 @@ class PublisherController {
       tagArray.push(gt.id)
     }
 
-    console.log(tagArray)
-
     try {
-      // const game = await gameinfo.with('tags').fetch()
       if (auth.user.id == game.publisher_id) {
         return view.render('publishers/update_game', {
           tags: tags.toJSON(),
@@ -279,6 +276,15 @@ class PublisherController {
     await game.delete()
 
     response.route('publisher_games')
+  }
+
+  // PUBLISHER PROFILE PAGE
+  async profile({ auth, view }) {
+    const publisher = await Publisher.find(auth.user.id)
+
+    return view.render('publishers/profile', {
+      publisher: publisher.toJSON()
+    })
   }
 
   // PROCESS LOGOUT

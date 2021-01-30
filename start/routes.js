@@ -32,6 +32,7 @@ Route.group(() => {
   Route.post('games/update/:game_id', 'PublisherController.processUpdateGame')
   Route.get('games/delete/:game_id', 'PublisherController.deleteGame').as('publisher_delete_game')
   Route.post('games/delete/:game_id', 'PublisherController.processDeleteGame')
+  Route.get('profile', 'PublisherController.profile').as('publisher_profile')
 }).prefix('publisher').middleware('auth:publisher')
 
 // Cloudinary routes

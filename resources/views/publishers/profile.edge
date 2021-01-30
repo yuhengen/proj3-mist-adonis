@@ -1,0 +1,41 @@
+@layout('publisher_base')
+
+@section('title')
+{{auth.user.publisher_name}} Profile | MiST
+@endsection
+
+@section('content')
+<h1>Publisher Profile</h1>
+<table class='table table-borderless table-responsive-xl m-3'>
+  <tbody>
+    <tr>
+      <th scope="row">Publisher Name:</td>
+      <td>{{publisher.publisher_name}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Publisher ID:</td>
+      <td>{{publisher.id}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Account Login Username:</td>
+      <td>{{publisher.username}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Contact Email:</td>
+      <td>{{publisher.contact_email}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Joined MiST:</td>
+      <td>{{publisher.created_at}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Last Updated:</td>
+      <td>{{publisher.updated_at}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Verified Account:</td>
+      <td style={{publisher.verified == 0 ? 'color:red;' : 'color:green'}}><b>{{publisher.verified == 0 ? 'Unverified' : 'Verified'}}</b></td>
+    </tr>
+  </tbody>
+</table>
+@endsection
