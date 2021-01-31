@@ -308,8 +308,8 @@ class PublisherController {
 
     const messages = {
       'username.required': 'Username is required',
-      'username.min': 'Username needs to be between 6 and 20 characters',
-      'username.max': 'Username needs to be between 6 and 20 characters',
+      'username.min': 'Username must be between 6 and 20 characters',
+      'username.max': 'Username must be between 6 and 20 characters',
       'username.unique': 'Username already exists',
       'username.alpha_numeric': 'Username can only contain alphanumeric characters',
       'password.required': 'Password is required',

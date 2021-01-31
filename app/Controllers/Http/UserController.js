@@ -269,13 +269,13 @@ class UserController {
       'password': 'required|min:8|confirmed',
       'email': 'required|unique:users',
       'country': 'not_equals:selectCountry',
-      'contact_no': 'required'
+      'contact_no': 'required|min:7|max:15'
     }
 
     const messages = {
       'username.required': 'Username is required',
-      'username.min': 'Username needs to be between 6 and 20 characters',
-      'username.max': 'Username needs to be between 6 and 20 characters',
+      'username.min': 'Username must be between 6 and 20 characters',
+      'username.max': 'Username must be between 6 and 20 characters',
       'username.alpha_numeric': 'Username can only contain alphanumeric characters',
       'username.unique': 'Username already exists',
       'password.required': 'Password is required',
@@ -284,7 +284,9 @@ class UserController {
       'email.required': 'Email address is required',
       'email.unique': 'Email address already exists',
       'country.not_equals': 'Please select a country',
-      'contact_no.required': 'Phone number is required'
+      'contact_no.required': 'Phone number is required',
+      'contact_no.min': 'Phone number must be between 7 and 15 digits',
+      'contact_no.max': 'Phone number must be between 7 and 15 digits'
     }
 
     let formData = request.post()
@@ -296,6 +298,23 @@ class UserController {
 
       return response.redirect('back')
     }
+
+    let newUser = new User();
+
+    newUser.username = formData.username
+    newUser.password = formData.password
+    newUser.email = formData.email
+    newUser.country = formData.country
+    newUser.contact_no = formData.contact_no
+    newUser.verified = false
+
+    await newUser.save()
+
+    session.flash({
+      notification: `${newUser.username} has been created`
+    })
+
+    return response.route('user_login')
   }
 }
 
