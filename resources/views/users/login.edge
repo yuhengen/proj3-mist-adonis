@@ -1,0 +1,28 @@
+@layout('base')
+
+@section('title')
+Login | MiST
+@endsection
+
+@section('content')
+<div class="d-flex justify-content-center align-items-center flex-column">
+  <img src="/images/mist-logo.png" class=" m-4"/>
+  <form method="POST">
+    {{csrfField()}}
+  <div class="form-group">
+    <input type="text" name="username" class="form-control {{hasErrorFor('username') ? 'is-invalid': ''}}" value="{{old('username')}}" placeholder="Enter username">
+      @if(hasErrorFor('username'))
+      <div class='invalid-feedback'>{{getErrorFor('username')}}</div>
+      @endif
+  </div>
+  <div class="form-group">
+    <input type="password" name="password" class="form-control {{hasErrorFor('password') ? 'is-invalid': ''}}" placeholder="Enter password">
+      @if(hasErrorFor('password'))
+      <div class='invalid-feedback'>{{getErrorFor('password')}}</div>
+      @endif
+  </div>
+  <button type="submit" class="btn btn-primary btn-block">Login</button>
+  <a href="{{route('user_register')}}" class="btn btn-secondary btn-block">Register</a>
+</form>
+</div>
+@endsection

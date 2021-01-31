@@ -51,9 +51,9 @@ Add Game | MiST
   </div>
   <div class="m-3">
     <label class="form-label">Game Tags:</label>
-    <select class="tags form-control {{hasErrorFor('tags') ? 'is-invalid': ''}}" value="{{old('tags')}}" name="tags[]" multiple="multiple">
+    <select class="tags form-control {{hasErrorFor('tags') ? 'is-invalid': ''}}" name="tags[]" multiple="multiple">
       @each(tag in tags)
-        <option value="{{tag.id}}">{{tag.tag_name}}</option>
+        <option value="{{tag.id}}" {{old('tags').includes(tag.id) ? 'selected' : ''}}>{{tag.tag_name}}</option>
       @endeach
     </select>
       <small class="form-text text-muted">Select the tags and categories related to your game</small>

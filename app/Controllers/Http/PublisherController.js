@@ -173,7 +173,6 @@ class PublisherController {
   async processUpdateGame({ request, response, params, session }) {
 
     let game = await Game.find(params.game_id)
-    let tags = await Tag.all()
     let gametags = await game.tags().with('games').fetch()
 
     const rules = {
@@ -309,13 +308,13 @@ class PublisherController {
 
     const messages = {
       'username.required': 'Username is required',
-      'username.min': 'Username needs to be at least 6 characters',
-      'username.max': 'Username needs to be shorter than 20 characters',
+      'username.min': 'Username needs to be between 6 and 20 characters',
+      'username.max': 'Username needs to be between 6 and 20 characters',
       'username.unique': 'Username already exists',
-      'username.alpha_numeric': 'Username can only be alphanumeric and cannot contain spaces or symbols',
+      'username.alpha_numeric': 'Username can only contain alphanumeric characters',
       'password.required': 'Password is required',
-      'password.min': 'Password must be 8 characters or more',
-      'password.confirmed': 'Passwords does not match',
+      'password.min': 'Password must be at least 8 characters long',
+      'password.confirmed': 'Passwords do not match',
       'contact_email.required': 'Contact email is required',
       'contact_email.unique': 'Email already exists',
       'publisher_name.required': 'Your publisher name is required',
@@ -346,6 +345,10 @@ class PublisherController {
       notification: `${newPublisher.username} has been created`
     })
 
+    return response.route('publisher_login')
+  }
+
+  reroute({ response }) {
     return response.route('publisher_login')
   }
 }

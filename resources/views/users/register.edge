@@ -1,0 +1,68 @@
+@layout('base')
+
+@section('title')
+Account Registration | MiST
+@endsection
+
+@section('content')
+<div class="d-flex justify-content-center flex-column">
+  <div class="d-flex justify-content-center align-items-center">
+    <img src="/images/mist-logo.png" class=" m-3" style="width:100px;"/>
+    <h1>Account Registration</h1>
+  </div>
+  <form method="POST">
+    {{csrfField()}}
+    <div class="m-2">
+      <label class="form-label">Login Username:</label>
+      <input type="text" name="username" class="form-control {{hasErrorFor('username') ? 'is-invalid': ''}}" value="{{old('username')}}" />
+      @if(hasErrorFor('username'))
+      <div class='invalid-feedback'>{{getErrorFor('username')}}</div>
+      @endif
+    </div>
+    <div class="m-2">
+      <label class="form-label">Password:</label>
+      <input type="password" name="password" class="form-control {{hasErrorFor('password') ? 'is-invalid': ''}}" value="{{old('password')}}"/>
+      @if(hasErrorFor('password'))
+      <div class='invalid-feedback'>{{getErrorFor('password')}}</div>
+      @endif
+    </div>
+    <div class="m-2">
+      <label class="form-label">Confirm Password:</label>
+      <input type="password" name="password_confirmation" class="form-control" value="{{old('password_confirmation')}}"/>
+    </div>
+    <div class="m-2">
+      <label class="form-label">Email Address:</label>
+      <input type="email" name="email" class="form-control {{hasErrorFor('email') ? 'is-invalid': ''}}" value="{{old('email')}}" aria-describedby="emailHelp">
+      <small id="emailHelp" class="form-text text-muted">This email address will be used for password reset and receipt of purchase</small>
+      @if(hasErrorFor('email'))
+      <div class='invalid-feedback'>{{getErrorFor('email')}}</div>
+      @endif
+    </div>
+    <div class="m-2">
+      <label class="form-label">Country:</label>
+      <select name="country" class="form-control {{hasErrorFor('country') ? 'is-invalid': ''}}" aria-describedby="countryHelp">
+          <option value="selectCountry">--- Select Country ---</option>
+        @each(country in countries)
+          <option value={{country.id}} {{old('country') == country.id ? 'selected' : ''}}>{{country.text}}</option>
+        @endeach
+      </select>
+      <small id="countryHelp" class="form-text text-muted">This cannot be changed once registerd!</small>
+      @if(hasErrorFor('country'))
+      <div class='invalid-feedback'>{{getErrorFor('country')}}</div>
+      @endif
+    </div>
+    <div class="m-2">
+      <label class="form-label">Phone Number:</label>
+      <input type="text" name="contact_no" class="form-control {{hasErrorFor('contact_no') ? 'is-invalid': ''}}" value="{{old('contact_no')}}" aria-describedby="phoneHelp"/>
+      <small id="phoneHelp" class="form-text text-muted">Required for Two-Factor Authentication</small>
+      @if(hasErrorFor('contact_no'))
+      <div class='invalid-feedback'>{{getErrorFor('contact_no')}}</div>
+      @endif
+    </div>
+    <div class="m-2">
+      <input type="submit" class="btn btn-primary" value="Register" style="width:100px;"/>
+      <a href="{{route('user_login')}}" class="btn btn-danger m-2" style="width:100px;">Back</a>
+    </div>
+  </form>
+</div>
+@endsection

@@ -16,7 +16,7 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.on('/').render('welcome')
+Route.get('/', 'PublisherController.reroute')
 
 // Publisher portal
 Route.get('publisher/', 'PublisherController.index').as('publisher_login')
@@ -35,11 +35,15 @@ Route.group(() => {
   Route.get('profile', 'PublisherController.profile').as('publisher_profile')
 }).prefix('publisher').middleware('auth:publisher')
 
+// User routes
+Route.get('user', 'UserController.index').as('user_login')
+Route.post('user', 'UserController.processLogin')
+Route.get('user/register', 'UserController.register').as('user_register')
+Route.post('user/register', 'UserController.processRegister')
+
 // Cloudinary routes
 Route.get('cloudinary/sign', 'CloudinaryController.sign').as('cloudinary_sign')
 
-
+// Game Routes
 Route.get('games/', 'GameController.index').as('all_games')
 Route.get('games-api/', 'GameController.gamesapi')
-Route.get('games/add', 'GameController.add').as('add_game')
-Route.post('games/add', 'GameController.processAdd')
