@@ -36,6 +36,14 @@ module.exports = {
     password: 'password'
   },
 
+  user: {
+    serializer: 'lucid',
+    model: 'App/Models/User',
+    scheme: 'session',
+    uid: 'username',
+    password: 'password'
+  },
+
   session: {
     serializer: 'lucid',
     model: 'App/Models/User',

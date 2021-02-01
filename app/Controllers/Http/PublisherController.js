@@ -53,27 +53,41 @@ class PublisherController {
   }
 
   // GAMES PAGE
-  async games({ auth, view }) {
-    const publisher = await Publisher.find(auth.user.id)
+  async games({ auth, view, session, response }) {
+    if (auth.user.role == 'publisher') {
+      const publisher = await Publisher.find(auth.user.id)
+      const games = await publisher.games().with('publisher').with('tags').fetch()
 
-    const games = await publisher.games().with('publisher').with('tags').fetch()
+      return view.render('publishers/games', {
+        'games': games.toJSON()
+      })
+    } else {
+      session.flash({
+        warning: `Unauthorized access`
+      })
 
-    return view.render('publishers/games', {
-      'games': games.toJSON()
-    })
-    // return games.toJSON()
+      return response.route('user_login')
+    }
   }
 
   // ADD GAME FORM
-  async addGame({ view }) {
-    let tags = await Tag.all()
-    return view.render('publishers/add_game', {
-      tags: tags.toJSON(),
-      cloudinaryName: Config.get('cloudinary.name'),
-      cloudinaryPreset: Config.get('cloudinary.preset'),
-      cloudinaryApiKey: Config.get('cloudinary.api_key'),
-      signUrl: '/cloudinary/sign'
-    })
+  async addGame({ view, auth, session, response }) {
+    if (auth.user.role == 'publisher') {
+      let tags = await Tag.all()
+      return view.render('publishers/add_game', {
+        tags: tags.toJSON(),
+        cloudinaryName: Config.get('cloudinary.name'),
+        cloudinaryPreset: Config.get('cloudinary.preset'),
+        cloudinaryApiKey: Config.get('cloudinary.api_key'),
+        signUrl: '/cloudinary/sign'
+      })
+    } else {
+      session.flash({
+        warning: `Unauthorized access`
+      })
+
+      return response.route('user_login')
+    }
   }
 
   // PROCESS ADD GAME
@@ -123,6 +137,7 @@ class PublisherController {
     newGame.image = formData.image
     newGame.publisher_id = auth.user.id
     newGame.verified = false
+    newGame.role = 'publisher'
 
     await newGame.save()
 
@@ -133,39 +148,46 @@ class PublisherController {
     session.flash({
       notification: `${newGame.title} has been added and is pending approval`
     })
-
     return response.route('publisher_games')
   }
 
   // UPDATE GAME FORM
-  async updateGame({ view, params, response, auth }) {
-    let game = await Game.find(params.game_id)
-    let tags = await Tag.all()
-    let gametags = await game.tags().with('games').fetch()
+  async updateGame({ view, params, response, auth, session }) {
+    if (auth.user.role == 'publisher') {
+      let game = await Game.find(params.game_id)
+      let tags = await Tag.all()
+      let gametags = await game.tags().with('games').fetch()
 
-    let tagArray = []
-    for (let gt of gametags.toJSON()) {
-      tagArray.push(gt.id)
-    }
+      let tagArray = []
+      for (let gt of gametags.toJSON()) {
+        tagArray.push(gt.id)
+      }
 
-    try {
-      if (auth.user.id == game.publisher_id) {
-        return view.render('publishers/update_game', {
-          tags: tags.toJSON(),
-          gametags: gametags.toJSON(),
-          tagArray: tagArray,
-          game: game.toJSON(),
-          cloudinaryName: Config.get('cloudinary.name'),
-          cloudinaryPreset: Config.get('cloudinary.preset'),
-          cloudinaryApiKey: Config.get('cloudinary.api_key'),
-          signUrl: '/cloudinary/sign'
+      try {
+        if (auth.user.id == game.publisher_id) {
+          return view.render('publishers/update_game', {
+            tags: tags.toJSON(),
+            gametags: gametags.toJSON(),
+            tagArray: tagArray,
+            game: game.toJSON(),
+            cloudinaryName: Config.get('cloudinary.name'),
+            cloudinaryPreset: Config.get('cloudinary.preset'),
+            cloudinaryApiKey: Config.get('cloudinary.api_key'),
+            signUrl: '/cloudinary/sign'
+          })
+        }
+      } catch (error) {
+        return response.status(400).json({
+          status: 'error',
+          message: 'Unauthorized access.'
         })
       }
-    } catch (error) {
-      return response.status(400).json({
-        status: 'error',
-        message: 'Unauthorized access.'
+    } else {
+      session.flash({
+        warning: `Unauthorized access`
       })
+
+      return response.route('user_login')
     }
   }
 
@@ -251,19 +273,27 @@ class PublisherController {
 
   // DELETE GAME PAGE
   async deleteGame({ auth, params, view, response, session }) {
-    try {
-      let game = await Game.find(params.game_id)
+    if (auth.user.role == 'publisher') {
+      try {
+        let game = await Game.find(params.game_id)
 
-      if (auth.user.id == game.publisher_id) {
-        return view.render('publishers/delete_game', {
-          game: game.toJSON()
+        if (auth.user.id == game.publisher_id) {
+          return view.render('publishers/delete_game', {
+            game: game.toJSON()
+          })
+        }
+      } catch (error) {
+        return response.status(400).json({
+          status: 'error',
+          message: 'Unauthorized access.'
         })
       }
-    } catch (error) {
-      return response.status(400).json({
-        status: 'error',
-        message: 'Unauthorized access.'
+    } else {
+      session.flash({
+        warning: `Unauthorized access`
       })
+
+      return response.route('user_login')
     }
   }
 
@@ -279,11 +309,19 @@ class PublisherController {
 
   // PUBLISHER PROFILE PAGE
   async profile({ auth, view }) {
-    const publisher = await Publisher.find(auth.user.id)
+    if (auth.user.role == 'publisher') {
+      const publisher = await Publisher.find(auth.user.id)
 
-    return view.render('publishers/profile', {
-      publisher: publisher.toJSON()
-    })
+      return view.render('publishers/profile', {
+        publisher: publisher.toJSON()
+      })
+    } else {
+      session.flash({
+        warning: `Unauthorized access`
+      })
+
+      return response.route('user_login')
+    }
   }
 
   // PROCESS LOGOUT

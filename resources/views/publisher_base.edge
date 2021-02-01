@@ -37,6 +37,9 @@
       @if(flashMessage('notification'))
         <div class="alert alert-success">{{ flashMessage('notification') }}</div>
       @endif
+      @if(flashMessage('warning'))
+        <div class="alert alert-danger">{{ flashMessage('warning') }}</div>
+      @endif
       <div class="m-3">
           @section("content")
           @endsection
