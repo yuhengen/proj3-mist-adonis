@@ -23,6 +23,10 @@ class Game extends Model {
   tags() {
     return this.belongsToMany('App/Models/Tag')
   }
+
+  orders() {
+    return this.hasMany('App/Models/Order')
+  }
 }
 
 module.exports = Game

@@ -137,7 +137,6 @@ class PublisherController {
     newGame.image = formData.image
     newGame.publisher_id = auth.user.id
     newGame.verified = false
-    newGame.role = 'publisher'
 
     await newGame.save()
 
@@ -376,6 +375,7 @@ class PublisherController {
     newPublisher.contact_email = formData.contact_email;
     newPublisher.publisher_name = formData.publisher_name;
     newPublisher.verified = false;
+    newPublisher.role = 'publisher'
 
     await newPublisher.save()
 
