@@ -6,11 +6,25 @@ const Tag = use('App/Models/Tag')
 const Config = use('Config')
 
 class GameController {
-  async index({ view }) {
-    let allGames = await Game.all();
-    return view.render('games/index', {
-      'games': allGames.toJSON()
-    })
+  async index({ view, auth }) {
+    try {
+      auth.user = await auth.getUser()
+    } catch (e) {
+
+    }
+
+    if (auth.user) {
+      let allGames = await Game.all();
+      return view.render('games/index', {
+        'games': allGames.toJSON(),
+        'user': auth.user
+      })
+    } else {
+      let allGames = await Game.all();
+      return view.render('games/index', {
+        'games': allGames.toJSON()
+      })
+    }
   }
 
   async gamesapi() {

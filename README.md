@@ -9,6 +9,9 @@ My goal is to create a simplistic and attractive single page application website
 # Demo
 The demo of the site will be available soon...
 
+# Notes
+This repository only contains the back-end codes for Project MiST. Front-end codes can be found [here](https://github.com/yuhengen/proj3-mist-react)
+
 # UI/UX
 ## Identifying the Users (STRATEGY)
 The primary purpose of Mist is to have users create accounts and purchase video games on our platform. Our potential targets are gamers in general, as there will be a wide array of games and genre available on Mist.
@@ -86,12 +89,13 @@ The wireframes of the project will be available soon...
 
 # Technologies
 - [ReactJS](https://reactjs.org/), [AdonisJS](https://adonisjs.com/) and CSS for structuring and styling the website
+- [AdonisJS](https://adonisjs.com/) for admin page and data rendering
+- MySQL as database to store data via CRUD
 - Javascript to implement interactivty with website
 - [Bootstrap](https://getbootstrap.com/) for Navbar and other Bootstrap components
 - [GitHub](https://github.com/) for version control and repositories
 - [GitPod](https://gitpod.io/) as coding platform
 - [Axios](https://github.com/axios/axios) to read from JSON files and database
-- [AdonisJS](https://adonisjs.com/) for admin page and data rendering
 - GIMP for image editing
 - [Am I Responsive Checker](http://ami.responsivedesign.is/) to ensure my platform is mobile responsive
 

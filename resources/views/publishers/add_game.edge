@@ -73,7 +73,7 @@ Add Game | MiST
     <label class="form-label">Game Display Image:</label>
     <a href='#' class="btn btn-primary mb-3 upload_widget">Upload Image</a><br/>
     <input type="hidden" name="image" class="image_url form-control {{hasErrorFor('image') ? 'is-invalid': ''}}" value="{{old('image')}}"/>
-    <img src="{{old('image')}}" class="display_image" style="height:300px;"/>
+    <img src="{{old('image')}}" class="display_image" style="height:215px;width:460px;object-fit:cover;"/>
       @if(hasErrorFor('image'))
       <div class='invalid-feedback'>{{getErrorFor('image')}}</div>
       @endif
