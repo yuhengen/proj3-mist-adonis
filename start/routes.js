@@ -38,8 +38,8 @@ Route.group(() => {
 // User routes
 Route.get('user', 'UserController.index').as('user_login')
 Route.post('user', 'UserController.processLogin')
-Route.get('user/register', 'UserController.register').as('user_register')
-Route.post('user/register', 'UserController.processRegister')
+Route.get('/api/user/register', 'api/UserController.register').as('user_register')
+Route.post('/api/user/register', 'api/UserController.processRegister')
 
 // Cloudinary routes
 Route.get('cloudinary/sign', 'CloudinaryController.sign').as('cloudinary_sign')

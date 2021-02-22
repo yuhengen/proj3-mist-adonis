@@ -1,53 +1,9 @@
 'use strict'
 
 const User = use('App/Models/User')
-const { validateAll } = use('Validator')
 const Hash = use('Hash')
 
 class UserController {
-  // LOGIN PAGE
-  index({ view }) {
-    return view.render('users/login')
-  }
-
-  async processLogin({ response, request, session, auth }) {
-    let formData = request.post()
-
-    // Check if username is empty
-    if (!formData.username) {
-      session.withErrors({ username: 'Username cannot be empty' }).flashExcept();
-      return response.redirect('back')
-    }
-
-    // Access Publisher to see if username exists
-    const user = await User.findBy('username', formData.username);
-
-    // If username does not exist in database
-    if (!user) {
-      session.withErrors({ username: 'Username does not exist' }).flashExcept();
-      return response.redirect('back')
-    }
-
-    // Check if password is empty
-    if (!formData.password) {
-      session.withErrors({ password: 'Password cannot be empty' }).flashExcept();
-      return response.redirect('back')
-    }
-
-    // Verify password
-    const matchPassword = await Hash.verify(formData.password, user.password)
-
-    // Check if password matches username
-    if (!matchPassword) {
-      session.withErrors({ password: 'Incorrect password' }).flashExcept();
-      return response.redirect('back')
-    }
-
-    // Login
-    await auth.authenticator('user').attempt(formData.username, formData.password);
-    return response.route('all_games')
-  }
-
   register({ view }) {
     const countries = [
       { id: 'Afghanistan', text: 'Afghanistan' },
@@ -302,60 +258,24 @@ class UserController {
   }
 
   async processRegister({ request, response, session }) {
+    try {
+      let data = request.post()
 
-    let formData = request.post()
+      let newUser = new User();
 
-    // const rules = {
-    //   'username': 'required|min:6|max:20|alpha_numeric|unique:users',
-    //   'password': 'required|min:8|confirmed',
-    //   'email': 'required|unique:users',
-    //   'country': 'not_equals:selectCountry',
-    //   'contact_no': 'required|min:7|max:15'
-    // }
+      newUser.username = data.username
+      newUser.password = data.password
+      newUser.email = data.email
+      newUser.country = data.country
+      newUser.contact_no = data.contact_no
+      newUser.verified = false
 
-    // const messages = {
-    //   'username.required': 'Username is required',
-    //   'username.min': 'Username must be between 6 and 20 characters',
-    //   'username.max': 'Username must be between 6 and 20 characters',
-    //   'username.alpha_numeric': 'Username can only contain alphanumeric characters',
-    //   'username.unique': 'Username already exists',
-    //   'password.required': 'Password is required',
-    //   'password.min': 'Password must be at least 8 characters long',
-    //   'password.confirmed': 'Passwords do not match',
-    //   'email.required': 'Email address is required',
-    //   'email.unique': 'Email address already exists',
-    //   'country.not_equals': 'Please select a country',
-    //   'contact_no.required': 'Phone number is required',
-    //   'contact_no.min': 'Phone number must be between 7 and 15 digits',
-    //   'contact_no.max': 'Phone number must be between 7 and 15 digits'
-    // }
+      await newUser.save()
 
-    // const validation = await validateAll(formData, rules, messages)
-
-    // if (validation.fails()) {
-    //   session.withErrors(validation.messages()).flashExcept([])
-
-    //   return response.redirect('back')
-    // }
-
-    let newUser = new User();
-
-    newUser.username = formData.username
-    newUser.password = formData.password
-    newUser.email = formData.email
-    newUser.country = formData.country
-    newUser.contact_no = formData.contact_no
-    newUser.verified = false
-
-    console.log(newUser)
-
-    // await newUser.save()
-
-    // session.flash({
-    //   notification: `${newUser.username} has been created`
-    // })
-
-    // return response.route('user_login')
+      return response.json(newUser.toJSON())
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
 
