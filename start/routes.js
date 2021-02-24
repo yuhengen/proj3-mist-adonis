@@ -38,12 +38,12 @@ Route.group(() => {
 // User routes
 Route.get('user', 'UserController.index').as('user_login')
 Route.post('user', 'UserController.processLogin')
-Route.get('/api/user/register', 'api/UserController.register').as('user_register')
-Route.post('/api/user/register', 'api/UserController.processRegister')
+Route.get('api/user/register', 'api/UserController.register').as('user_register')
+Route.post('api/user/register', 'api/UserController.processRegister')
 
 // Cloudinary routes
 Route.get('cloudinary/sign', 'CloudinaryController.sign').as('cloudinary_sign')
 
 // Game Routes
-Route.get('games/', 'GameController.index').as('all_games')
-Route.get('games-api/', 'GameController.gamesapi')
+Route.get('games', 'GameController.index').as('all_games')
+Route.get('api/games', 'GameController.gamesapi')
