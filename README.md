@@ -14,13 +14,13 @@ This repository only contains the back-end codes for Project MiST. Front-end cod
 
 # UI/UX
 ## Identifying the Users (STRATEGY)
-The primary purpose of Mist is to have users create accounts and purchase video games on our platform. Our potential targets are gamers in general, as there will be a wide array of games and genre available on Mist.
+The primary purpose of MiST is to have users create accounts and purchase video games on our platform. Our potential targets are gamers in general, as there will be a wide array of games and genre available on MiST.
 
 ### Owner Stories
 ```
-- As the owner and developer of Mist, I want to get as many publishers and developers to put their games up on sale on Mist, so that it can attract more users to use our platform to purchase games
-- As the owner and developer of Mist, I want as many users as possible on our platform purchasing games, so that we are able to profit from the commissions
-- As the owner of Mist, I want to create a user-friendly platform for users to purchase and own games, so that will come back to use Mist
+- As the owner and developer of MiST, I want to get as many publishers and developers to put their games up on sale on MiST, so that it can attract more users to use our platform to purchase games
+- As the owner and developer of MiST, I want as many users as possible on our platform purchasing games, so that we are able to profit from the commissions
+- As the owner of MiST, I want to create a user-friendly platform for users to purchase and own games, so that will come back to use MiST
 ```
 
 ### User Stories (Developers/Publishers)
@@ -38,9 +38,18 @@ The primary purpose of Mist is to have users create accounts and purchase video 
 ```
 
 # The Requirements (SCOPE)
-## Current Features (Users)
+## Current Features for Publishers (Adonis/Backend)
 ```
-1. Sign up for account
+1. Sign up for Publisher account
+2. Login to the account
+3. Browse list of products that belong to you
+4. View or edit details of individual products
+5. Delete unwanted products from your list of products
+```
+
+## Current Features for Users (React/Frontend)
+```
+1. Sign up for User account
 2. Login to the account
 3. Browse for list of products
 4. View details of individual products
@@ -51,7 +60,7 @@ The primary purpose of Mist is to have users create accounts and purchase video 
 ```
 
 # Developing the Site Structure (STRUCTURE)
-The Mist platform has a navigation bar and footer on every page, allowing users to access most available pages with ease
+The MiST platform has a side navigation bar attached to every page, allowing publishers to access all pages with ease.
 
 ## Sitemap
 ---
@@ -61,7 +70,7 @@ The sitemap of the project will be available soon...
 ---
 
 # Developing Page Structure and Organize Interactions (SKELETON)
---
+Publishers are required to login to access any pages on the backend platform. Once logged in, the first thing the publishers see are your list of products, with a sidebar to access your games, profile or logout.
 
 ## Wireframes
 ---
@@ -72,10 +81,14 @@ The wireframes of the project will be available soon...
 
 # Designing the Graphics User Interface (SURFACE)
 ## Colors
---
+After research and considerations, the main colors I decide to use for the MiST backend website are the neutral colors of minimalism and simplicity.
+```
+-White, black or grey for the background, as it is able to blend in most situations
+-Black, grey or white used for fonts and texts to contrast the background colors
+```
 
 ## Fonts
---
+The font mainly used on the website is Sans Serif, the default font family, which is often used to convey modernity or minimalism.
 
 # ER Diagram
 <img src="./documentation/proj3-erd.jpg" style="margin: 0;">

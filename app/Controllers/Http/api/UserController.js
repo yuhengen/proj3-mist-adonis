@@ -5,7 +5,52 @@ const { validateAll } = use('Validator')
 const Hash = use('Hash')
 
 class UserController {
-  async processRegister({ request, response, session }) {
+  async profile({ response, auth }) {
+    try {
+      let user = await auth.authenticator('api').getUser()
+      response.json(user)
+    } catch (error) {
+      console.log(error)
+      response.send(error)
+    }
+  }
+
+  async processLogin({ request, response, auth }) {
+    let formData = request.post()
+
+    // Check if username is empty
+    if (!formData.username) {
+      return response.send('Username cannot be empty')
+    }
+
+    // Access Publisher to see if username exists
+    const user = await User.findBy('username', formData.username);
+
+    // If username does not exist in database
+    if (!user) {
+      return response.send('Username does not exist')
+    }
+
+    // Check if password is empty
+    if (!formData.password) {
+      return response.send('Password cannot be empty')
+    }
+
+    // Verify password
+    const matchPassword = await Hash.verify(formData.password, user.password)
+
+    // Check if password matches username
+    if (!matchPassword) {
+      return response.send('Incorrect password')
+    }
+
+    let uid = formData.username
+    let password = formData.password
+    let token = await auth.authenticator('api').attempt(uid, password)
+    return response.json(token);
+  }
+
+  async processRegister({ request, response }) {
     try {
       let formData = request.post()
 
@@ -26,7 +71,7 @@ class UserController {
         'password.required': 'Password is required',
         'password.min': 'Password must be at least 8 characters long',
         'password.confirmed': 'Passwords do not match',
-        'email.email':'Invalid email address format',
+        'email.email': 'Invalid email address format',
         'email.required': 'Email address is required',
         'email.unique': 'Email address already exists',
         'country.required': 'Please select a country',

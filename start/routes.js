@@ -36,10 +36,9 @@ Route.group(() => {
 }).prefix('publisher').middleware('auth:publisher')
 
 // User routes
-Route.get('user', 'UserController.index').as('user_login')
-Route.post('user', 'UserController.processLogin')
-Route.get('api/user/register', 'api/UserController.register').as('user_register')
+Route.post('api/user/login', 'api/UserController.processLogin')
 Route.post('api/user/register', 'api/UserController.processRegister')
+Route.get('api/user/profile', 'api/UserController.profile')
 
 // Cloudinary routes
 Route.get('cloudinary/sign', 'CloudinaryController.sign').as('cloudinary_sign')
