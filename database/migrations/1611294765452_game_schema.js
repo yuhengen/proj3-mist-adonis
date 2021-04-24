@@ -14,11 +14,11 @@ class GameSchema extends Schema {
       table.string('publisher',45).notNullable()
       table.string('developer',45).notNullable()
       table.string('image', 200).notNullable()
-      table.string('preview_1', 200).notNullable()
-      table.string('preview_2', 200).notNullable()
-      table.string('preview_3', 200).notNullable()
-      table.string('preview_4', 200).nullable()
-      table.string('preview_5', 200).nullable()
+      // table.string('preview_1', 200).notNullable()
+      // table.string('preview_2', 200).notNullable()
+      // table.string('preview_3', 200).notNullable()
+      // table.string('preview_4', 200).nullable()
+      // table.string('preview_5', 200).nullable()
       table.boolean('verified').notNullable()
 
       table.integer('publisher_id').unsigned().notNullable();

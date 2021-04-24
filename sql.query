@@ -1,0 +1,2 @@
+INSERT INTO tags (tag_name)
+VALUES ('3D'),('Action'),('Adventure'),('Anime'),('Co-op'),('Competitive'),('Fantasy'),('First Person'),('Hack and Slash'),('JRPG'),('Mature'),('MMORPG'),('Multiplayer'),('Openworld'),('RPG'),('Singleplayer'),('Strategy'),('Survival'),('Third Person'),('Tower Defense');
